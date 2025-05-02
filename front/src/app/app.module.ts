@@ -11,9 +11,17 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import { HeaderComponent } from './app/core/header/header.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {NgOptimizedImage} from "@angular/common";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {JwtInterceptor} from "./app/interceptors/jwt.interceptor";
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,8 +31,13 @@ import {MatIconModule} from "@angular/material/icon";
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
+    MatToolbarModule,
+    NgOptimizedImage,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
