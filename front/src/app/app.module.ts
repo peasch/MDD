@@ -17,11 +17,12 @@ import {NgOptimizedImage} from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {JwtInterceptor} from "./app/interceptors/jwt.interceptor";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ArticlesComponent } from './pages/articles/articles.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, NotFoundComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, NotFoundComponent, ArticlesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

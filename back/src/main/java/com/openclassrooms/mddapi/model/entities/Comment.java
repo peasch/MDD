@@ -14,4 +14,14 @@ public class Comment implements Serializable {
     @Column(name="id")
     private int id;
 
+    @Column(name ="content")
+    private String content;
+
+    @Column(name ="author")
+    private String author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id")
+    private Article article_id;
+
 }

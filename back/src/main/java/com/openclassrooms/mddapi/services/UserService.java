@@ -6,4 +6,6 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     UserDTO saveUser(UserDTO userDto);
+
+    UserDTO getUserById(int id);
 }

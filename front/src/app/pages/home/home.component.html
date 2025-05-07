@@ -1,10 +1,14 @@
-<div class="center" >
+<div class="center" *ngIf="$notLogged() | async">
   <div style="width: fit-content;margin: auto">
-  <img ngSrc="../assets/images/logo_p6.png" alt="logo" height="401" width="695"/>
+    <img ngSrc="../assets/images/logo_p6.png" alt="logo" height="401" width="695"/>
   </div>
   <h1>Welcome to MDD</h1>
-<div class="center" style="display: inline-block;width: fit-content;margin: auto">
-  <button mat-raised-button routerLink="register">S'inscire</button>
-  <button mat-raised-button routerLink="login">Se connecter</button>
+  <div class="center" style="display: inline-block;width: fit-content;margin: auto"
+       *ngIf="$notLogged() | async">
+    <button mat-raised-button routerLink="register">S'inscire</button>
+    <button mat-raised-button routerLink="login">Se connecter</button>
+  </div>
 </div>
-</div>
+
+
+

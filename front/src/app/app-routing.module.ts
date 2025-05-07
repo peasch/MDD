@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import {LoginComponent} from "./pages/login/login.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
+import {ArticlesComponent} from "./pages/articles/articles.component";
 
 
 // consider a guard combined with canLoad / canActivate route option
@@ -11,6 +12,7 @@ import {NotFoundComponent} from "./pages/not-found/not-found.component";
 const routes: Routes = [{ path: '', component: HomeComponent },
   {title:'Login', path: 'login', component: LoginComponent},
 {path: 'register', component: RegisterComponent},
+  {path: 'articles', component: ArticlesComponent},
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }];
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,4 +19,7 @@ public class Theme implements Serializable {
 
     @Column(name ="name")
     private String name;
+
+    @OneToMany(mappedBy = "theme")
+    private Set<Article> themeArticles = new HashSet<>();
 }

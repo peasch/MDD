@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,4 +25,10 @@ public class User implements Serializable {
 
     @Column(name="password")
     private String password;
+
+    @OneToMany
+    private Set<Article> followedArticles = new HashSet<>();
+
+    @OneToMany(mappedBy = "author")
+    private Set<Article> writtenArticles = new HashSet<>();
 }
