@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.model.mappers;
 
-import com.openclassrooms.mddapi.model.DTO.UserDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

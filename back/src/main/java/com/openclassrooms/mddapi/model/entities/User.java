@@ -1,7 +1,9 @@
 package com.openclassrooms.mddapi.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -23,6 +25,7 @@ public class User implements Serializable {
     @Column(name="email")
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name="password")
     private String password;
 

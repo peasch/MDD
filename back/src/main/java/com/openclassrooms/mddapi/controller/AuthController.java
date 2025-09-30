@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.model.DTO.LoginDTO;
-import com.openclassrooms.mddapi.model.DTO.UserDTO;
+import com.openclassrooms.mddapi.model.dto.LoginDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.services.JWTService;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,17 +41,16 @@ public class AuthController {
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/login")
     public ResponseEntity<Map<Object, Object>> login(@RequestBody LoginDTO logintDto) {
-        System.out.println(logintDto.toString());
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logintDto.getEmail(), logintDto.getPassword()));
 
             UserDTO userLoggedin = userService.getUserByEmail(logintDto.getEmail());
-            System.out.println(userLoggedin.toString());
+
             String token = jwtService.generateToken(userLoggedin);
             Map<Object, Object> model = new HashMap<>();
             model.put("message", "logged in");
             model.put("token", token);
-            model.put("user", userLoggedin);
             return ok(model);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -66,17 +65,20 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserDTO userDto) {
 
-        try {
-            System.out.println(userDto.toString());
-            userService.saveUser(userDto);
-            UserDTO saved = userService.getUserByEmail(userDto.getEmail());
-            Map<Object, Object> model = new HashMap<>();
-            model.put("message", "User registered successfully");
-            model.put("token", jwtService.generateToken(saved));
-            model.put("user", saved);
-            return ok(model);
-        } catch (Exception e) {
-            return new ResponseEntity("register error", HttpStatus.FORBIDDEN);
+        if(userService.getUserByEmail(userDto.getEmail()) == null) {
+            try {
+                userService.saveUser(userDto);
+                UserDTO saved = userService.getUserByEmail(userDto.getEmail());
+                Map<Object, Object> model = new HashMap<>();
+                model.put("message", "User registered successfully");
+                model.put("token", jwtService.generateToken(saved));
+                model.put("user", saved);
+                return ok(model);
+            } catch (Exception e) {
+                return new ResponseEntity("register error", HttpStatus.FORBIDDEN);
+            }
+        }else {
+            return new ResponseEntity("email already exist", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -87,4 +89,6 @@ public class AuthController {
         return new ResponseEntity(userService.getUserByEmail(principal.getClaimAsString("sub")), HttpStatus.OK);
 
     }
+
+
 }

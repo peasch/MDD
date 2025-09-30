@@ -1,5 +1,6 @@
-package com.openclassrooms.mddapi.model.DTO;
+package com.openclassrooms.mddapi.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class UserDTO implements Serializable {
 
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
 }

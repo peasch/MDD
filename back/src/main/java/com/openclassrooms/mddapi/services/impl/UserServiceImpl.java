@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.services.impl;
 
-import com.openclassrooms.mddapi.model.DTO.UserDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import com.openclassrooms.mddapi.model.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.UserDAO;
@@ -30,6 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserById(int id) {
+        if (checkId(id)) {
+            userDao.deleteById(id);
+        }
+    }
+
+    @Override
     public UserDTO getUserByEmail(String email) {
         if (checkEmail(email)) {
             return mapper.fromUserToDto(userDao.findByEmail(email));
@@ -37,6 +44,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
     @Override
     public UserDTO saveUser(UserDTO userDto) {
         if (!this.checkEmail(userDto.getEmail())) {
@@ -53,5 +61,9 @@ public class UserServiceImpl implements UserService {
     private boolean checkEmail(String email) {
         return userDao.findByEmail(email) != null;
 
+    }
+
+    private boolean checkId(Integer id) {
+        return userDao.findById(id).isPresent();
     }
 }

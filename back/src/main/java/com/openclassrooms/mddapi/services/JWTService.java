@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.config.CustomUserDetailsService;
-import com.openclassrooms.mddapi.model.DTO.UserDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;

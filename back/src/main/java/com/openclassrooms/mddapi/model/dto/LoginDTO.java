@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.model.DTO;
+package com.openclassrooms.mddapi.model.dto;
 
 import lombok.Data;
 

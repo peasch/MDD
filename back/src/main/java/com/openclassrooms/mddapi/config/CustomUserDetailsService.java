@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.config;
 
-import com.openclassrooms.mddapi.model.DTO.UserDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
