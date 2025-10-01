@@ -36,7 +36,6 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @Operation(summary = "login method", description = "clic here to login in with your credentials, email & password")
-
     @ApiResponse(responseCode = "200", description = "You're logged in")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/login")
@@ -59,7 +58,6 @@ public class AuthController {
     }
 
     @Operation(summary = "register method", description = "clic here to register, with your details")
-
     @ApiResponse(responseCode = "200", description = "Welcome in, you're registered")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/register")

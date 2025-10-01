@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.integration.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +21,7 @@ class AuthControllerSITest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+
 
     @Test
     void loginFailureTest() throws Exception {
