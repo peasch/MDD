@@ -5,7 +5,6 @@ import com.openclassrooms.mddapi.model.mappers.ThemeMapper;
 import com.openclassrooms.mddapi.repositories.ThemeDAO;
 import com.openclassrooms.mddapi.services.ThemeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

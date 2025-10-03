@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.model.entities.Article;
 import com.openclassrooms.mddapi.model.mappers.ArticleMapper;
 import com.openclassrooms.mddapi.repositories.ArticleDAO;
 import com.openclassrooms.mddapi.services.ArticleService;
+import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Qualifier("articleMapper")
     private final ArticleMapper mapper;
-
+    private final CommentService commentService;
     private final UserService userService;
     private final ThemeService themeService;
 
@@ -67,6 +68,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void deleteArticle(int id) {
         if (articleDAO.existsById(id)) {
+            commentService.deleteAllCommentsOfArticle(id);
             articleDAO.deleteById(id);
         }
     }
