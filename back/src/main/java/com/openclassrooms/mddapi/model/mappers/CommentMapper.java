@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.model.mappers;
 
-import com.openclassrooms.mddapi.model.dto.ThemeDTO;
-import com.openclassrooms.mddapi.model.entities.Theme;
+import com.openclassrooms.mddapi.model.dto.CommentDTO;
+import com.openclassrooms.mddapi.model.entities.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
@@ -10,9 +10,10 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Component
 @Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface ThemeMapper {
+public interface CommentMapper {
 
-    Theme  fromDtoToTheme(ThemeDTO themeDTO);
+    Comment fromDtoToComment(CommentDTO commentDTO);
 
-    ThemeDTO  fromThemeToDto(Theme theme);
+    CommentDTO fromCommentToCommentDTO(Comment comment);
+
 }

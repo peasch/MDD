@@ -39,11 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDTO save(int themeId, String content, int userId){
         UserDTO author = userService.getUserById(userId);
-        ThemeDTO themeDTO = new ThemeDTO();
-        //ThemeDTO theme = themeService.getThemeById(themeId);
-
+        ThemeDTO theme = themeService.getThemeById(themeId);
         ArticleDTO articleDTO = new ArticleDTO();
-        articleDTO.setTheme(themeDTO);
+        articleDTO.setTheme(theme);
         articleDTO.setContent(content);
         articleDTO.setAuthor(author);
 

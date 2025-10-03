@@ -1,7 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.model.dto.ArticleDTO;
-import com.openclassrooms.mddapi.model.entities.Article;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,26 +34,33 @@ public class ArticleController {
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @GetMapping()
-    public ResponseEntity<Map<Object,Object>> getArticles() {
+    public ResponseEntity<Map<Object, Object>> getArticles() {
 
         Map<Object, Object> model = new HashMap<>();
         model.put("articles", service.getArticles());
         return ok(model);
     }
 
-    public ResponseEntity<Map<Object,Object>> createArticle(@Valid @RequestParam("theme")int themeId,
-                                                            @Valid @RequestParam("content")String content,
-                                                            @AuthenticationPrincipal Jwt principal) {
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @PostMapping("/add")
+    public ResponseEntity<Map<Object, Object>> createArticle(@Valid @RequestParam("theme") int themeId,
+                                                             @Valid @RequestParam("content") String content,
+                                                             @AuthenticationPrincipal Jwt principal) {
 
-        Integer authorId = userService.getUserByEmail(principal.getClaimAsString("sub")).getId();
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+
         try {
-            ArticleDTO articleDTO = service.save(themeId,content,authorId);
+            ArticleDTO articleDTO = service.save(themeId, content, userLoggedIn.getId());
             Map<Object, Object> model = new HashMap<>();
-            model.put("message", "Rental created !");
-            model.put("rental", articleDTO);
+            model.put("message", "Article created !");
+            model.put("article", articleDTO);
             return ok(model);
         } catch (Exception e) {
-            return new ResponseEntity("problem with rental", HttpStatus.UNAUTHORIZED);
+            Map<Object, Object> error = new HashMap<>();
+            error.put("message", "something went wrong with this article");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }
 }
