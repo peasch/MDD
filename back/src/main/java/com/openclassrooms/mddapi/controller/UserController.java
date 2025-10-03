@@ -4,6 +4,8 @@ import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import com.openclassrooms.mddapi.model.mappers.UserMapper;
 import com.openclassrooms.mddapi.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,9 @@ public class UserController {
 
     private final UserMapper userMapper;
     private final UserService userService;
-
+    @Operation(summary = "delete user", description = "delete then chosen user")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
     @DeleteMapping("{id}")
     public ResponseEntity<?> save(@PathVariable("id") String id) {
         try {

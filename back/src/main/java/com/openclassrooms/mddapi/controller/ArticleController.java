@@ -41,7 +41,7 @@ public class ArticleController {
         return ok(model);
     }
 
-    @Operation(summary = "all articles method", description = "get all articles in database")
+    @Operation(summary = "submit an article method", description = "method to save an article")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/add")
@@ -63,4 +63,41 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Map<Object, Object>> updateArticle(@PathVariable(name ="id")int id, @Valid @RequestBody ArticleDTO articleDTO) {
+
+        try {
+            ArticleDTO articleUpdatedDTO = service.updateArticle(id,articleDTO);
+            Map<Object, Object> model = new HashMap<>();
+            model.put("message", "Article updated!");
+            model.put("article", articleUpdatedDTO);
+            return ok(model);
+        } catch (Exception e) {
+            Map<Object, Object> error = new HashMap<>();
+            error.put("message", "something went wrong with this article");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        }
+    }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @DeleteMapping({"delete/{id}"})
+    public ResponseEntity<Map<Object, Object>> deleteArticle(@PathVariable(name="id") int id) {
+        try{
+            service.deleteArticle(id);
+            Map<Object, Object> model = new HashMap<>();
+            model.put("message", "Article deleted!");
+            return ok(model);
+        }catch(Exception e){
+            Map<Object, Object> error = new HashMap<>();
+            error.put("message", "something went wrong with deleting article");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        }
+    }
+
 }

@@ -29,7 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ThemeService themeService;
 
     @Override
-    public List<ArticleDTO> getArticles(){
+    public List<ArticleDTO> getArticles() {
         List<Article> articles = articleDAO.findAll();
         List<ArticleDTO> articlesDTO = new ArrayList<>();
         articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDTO save(int themeId, String content, int userId){
+    public ArticleDTO save(int themeId, String content, int userId) {
         UserDTO author = userService.getUserById(userId);
         ThemeDTO theme = themeService.getThemeById(themeId);
         ArticleDTO articleDTO = new ArticleDTO();
@@ -48,4 +48,27 @@ public class ArticleServiceImpl implements ArticleService {
         return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleDTO)));
 
     }
+
+    @Override
+    public ArticleDTO updateArticle(int id, ArticleDTO articleDTO) {
+        ArticleDTO articleToUpdate = mapper.fromArticleToDto(articleDAO.findById(id));
+        articleToUpdate.setContent(articleDTO.getContent());
+        articleToUpdate.setAuthor(articleDTO.getAuthor());
+        articleToUpdate.setTheme(articleDTO.getTheme());
+
+        return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleToUpdate)));
+    }
+
+    @Override
+    public ArticleDTO getArticle(int id) {
+        return mapper.fromArticleToDto(articleDAO.findById(id));
+    }
+
+    @Override
+    public void deleteArticle(int id) {
+        if (articleDAO.existsById(id)) {
+            articleDAO.deleteById(id);
+        }
+    }
+
 }

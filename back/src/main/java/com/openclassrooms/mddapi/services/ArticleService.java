@@ -9,4 +9,10 @@ public interface ArticleService {
     List<ArticleDTO> getArticles();
 
     ArticleDTO save(int themeId, String content, int userId);
+
+    ArticleDTO updateArticle(int id,ArticleDTO articleDTO);
+
+    ArticleDTO getArticle(int id);
+
+    void deleteArticle(int id);
 }
