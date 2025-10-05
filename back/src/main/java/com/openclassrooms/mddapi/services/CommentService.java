@@ -12,4 +12,5 @@ public interface CommentService {
 
     List<CommentDTO> getAllCommentsOfUser(int id);
 
+    List<CommentDTO> getAllCommentsOfUserAndArticle(int userId, int articleId);
 }

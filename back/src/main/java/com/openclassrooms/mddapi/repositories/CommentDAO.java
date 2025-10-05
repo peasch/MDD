@@ -10,4 +10,5 @@ public interface CommentDAO  extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByAuthor(User author);
     List<Comment> findAllByArticle_id(int id);
+    List<Comment> findAllByAuthorAndArticle_id(User author, int id);
 }

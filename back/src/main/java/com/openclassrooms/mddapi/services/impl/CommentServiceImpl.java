@@ -56,19 +56,44 @@ public class CommentServiceImpl implements CommentService {
         if (userService.checkId(id)){
             UserDTO author = userService.getUserById(id);
             List<Comment> comments = commentDAO.findAllByAuthor(userMapper.fromDtoToUser(author));
-            if(comments.isEmpty()){
-                throw new NoSuchElementException("User with id : " + id + "has no comments");
-            }else {
-                List<CommentDTO> commentDTOS = new ArrayList<>();
-                comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
-                return commentDTOS;
-            }
+            return checkNoComments(comments,author.getId());
         }else{
             throw new NoSuchElementException("User with id : " + id + " not found");
         }
 
     }
-//
 
+    @Override
+    public List<CommentDTO> getAllCommentsOfUserAndArticle(int userId, int articleId){
+        if (userService.checkId(userId)){
+            UserDTO author = userService.getUserById(userId);
+            List<Comment> comments = commentDAO.findAllByAuthorAndArticle_id(userMapper.fromDtoToUser(author),articleId);
+            return checkNoCommentsOrArticle(comments,userId,articleId);
+        }else{
+            throw new NoSuchElementException("User "+ userId +" or article " + articleId + " not found");
+        }
+
+    }
+
+    public List<CommentDTO> checkNoComments(List<Comment> comments, int userId){
+        if(comments.isEmpty()){
+            throw new NoSuchElementException("User with id : " + userId + "has no comments");
+        }else {
+            List<CommentDTO> commentDTOS = new ArrayList<>();
+            comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
+            return commentDTOS;
+        }
+
+    }
+    public List<CommentDTO> checkNoCommentsOrArticle(List<Comment> comments, int userId,int articleId){
+        if(comments.isEmpty()){
+            throw new NoSuchElementException("User with id: " + userId + " has no comments on article: " + articleId);
+        }else {
+            List<CommentDTO> commentDTOS = new ArrayList<>();
+            comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
+            return commentDTOS;
+        }
+
+    }
 
 }
