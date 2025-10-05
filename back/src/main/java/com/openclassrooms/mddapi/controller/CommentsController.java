@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.model.dto.CommentDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.CommentService;
@@ -31,14 +32,13 @@ public class CommentsController {
     private final UserService userService;
     private final CommentService commentService;
     private static final String COMMENTS = "comments";
-    private static final String  MESSAGE = "message";
+    private static final String MESSAGE = "message";
 
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @GetMapping()
     public ResponseEntity<Map<Object, Object>> getComments() {
-
         Map<Object, Object> model = new HashMap<>();
         model.put(COMMENTS, commentService.getAllComments());
         model.put(MESSAGE, "All comments !");
@@ -50,15 +50,14 @@ public class CommentsController {
     @ApiResponse(responseCode = "500", description = "error")
     @GetMapping("/{id}")
     public ResponseEntity<Map<Object, Object>> getCommentsOfArticleId(@PathVariable(name = "id") int id) {
+        Map<Object, Object> model = new HashMap<>();
         try {
-            Map<Object, Object> model = new HashMap<>();
             model.put(COMMENTS, commentService.getAllCommentsOfArticle(id));
             model.put(MESSAGE, "Comments of article id :" + id);
             return ok(model);
         } catch (NoSuchElementException _) {
-            Map<Object, Object> error = new HashMap<>();
-            error.put(MESSAGE, "article not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            model.put(MESSAGE, "article not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
         }
     }
 
@@ -68,7 +67,7 @@ public class CommentsController {
     @GetMapping("/author/{id}")
     public ResponseEntity<Map<Object, Object>> getCommentsOfUserId(@PathVariable(name = "id") int id) {
         Map<Object, Object> model = new HashMap<>();
-        model.put("user",id);
+        model.put("user", id);
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfUser(id));
             model.put(MESSAGE, "Comments of User id :" + id);
@@ -89,19 +88,42 @@ public class CommentsController {
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         int userId = userLoggedIn.getId();
         Map<Object, Object> model = new HashMap<>();
-        model.put("user",userId);
-        model.put("article",articleId);
-        try{
-            model.put(COMMENTS,commentService.getAllCommentsOfUserAndArticle(userId, articleId));
+        model.put("user", userId);
+        model.put("article", articleId);
+        try {
+            model.put(COMMENTS, commentService.getAllCommentsOfUserAndArticle(userId, articleId));
             model.put(MESSAGE, "Comments of User id :" + userId);
             return ok(model);
-        }catch (NoSuchElementException e) {
-
+        } catch (NoSuchElementException e) {
             model.put(MESSAGE, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
         }
     }
 
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @PostMapping("/add/{id}")
+    public ResponseEntity<Map<Object, Object>> addCommentToArticle(@AuthenticationPrincipal Jwt principal,
+                                                                   @PathVariable(name = "id") int articleId,
+                                                                   @Valid @RequestParam("content") String content) {
+
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        int userId = userLoggedIn.getId();
+        Map<Object, Object> model = new HashMap<>();
+        model.put("user", userId);
+        model.put("article", articleId);
+        try{
+            CommentDTO commentDTO = commentService.addCommentToArticle(articleId, userId, content);
+            model.put("comment saved", commentDTO);
+            model.put("message", "comment added");
+            return ok(model);
+        } catch (NoSuchElementException e) {
+            model.put(MESSAGE, e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
+        }
+
+    }
 
 
 }

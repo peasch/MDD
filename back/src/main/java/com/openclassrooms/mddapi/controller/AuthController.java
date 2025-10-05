@@ -39,20 +39,18 @@ public class AuthController {
     @ApiResponse(responseCode = "200", description = "You're logged in")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDTO logintDto) {
-
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody LoginDTO logintDto) {
+        Map<Object, Object> model = new HashMap<>();
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logintDto.getEmail(), logintDto.getPassword()));
-
             UserDTO userLoggedin = userService.getUserByEmail(logintDto.getEmail());
 
             String token = jwtService.generateToken(userLoggedin);
-            Map<Object, Object> model = new HashMap<>();
+
             model.put("message", "logged in");
             model.put("token", token);
             return ok(model);
         } catch (Exception e) {
-            Map<Object, Object> model = new HashMap<>();
             model.put("message", "Bad Credentials");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
@@ -63,9 +61,9 @@ public class AuthController {
     @ApiResponse(responseCode = "200", description = "Welcome in, you're registered")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UserDTO userDto) {
+    public ResponseEntity<Map<Object, Object>> register(@RequestBody UserDTO userDto) {
 
-        if(userService.getUserByEmail(userDto.getEmail()) == null) {
+        if (userService.getUserByEmail(userDto.getEmail()) == null) {
             try {
                 userService.saveUser(userDto);
                 UserDTO saved = userService.getUserByEmail(userDto.getEmail());
@@ -78,7 +76,7 @@ public class AuthController {
                 error.put("message", "error with registration");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
             }
-        }else {
+        } else {
             Map<Object, Object> error = new HashMap<>();
             error.put("message", "Email already registered");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
@@ -88,14 +86,13 @@ public class AuthController {
     @ApiResponse(responseCode = "200", description = "here are your informations")
     @ApiResponse(responseCode = "400", description = "error")
     @GetMapping("/me")
-    public ResponseEntity getMe(@AuthenticationPrincipal Jwt principal) {
+    public ResponseEntity<Map<Object, Object>> getMe(@AuthenticationPrincipal Jwt principal) {
         Map<Object, Object> model = new HashMap<>();
         model.put("message", "get your informations");
         model.put("mail", userService.getUserByEmail(principal.getClaimAsString("sub")));
         return ok(model);
 
     }
-
 
 
 }

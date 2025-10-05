@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services.impl;
 
+import com.openclassrooms.mddapi.model.dto.ArticleDTO;
 import com.openclassrooms.mddapi.model.dto.CommentDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.Comment;
@@ -38,57 +39,72 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> getAllCommentsOfArticle(int id){
-            if (articleService.checkArticle(id)) {
+    public List<CommentDTO> getAllCommentsOfArticle(int id) {
+        if (articleService.checkArticle(id)) {
             List<Comment> comments = commentDAO.findAllByArticle_id(id);
             List<CommentDTO> commentDTOS = new ArrayList<>();
             comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
             return commentDTOS;
-        }else{
-                throw new NoSuchElementException("Article with id " + id + " not found");
+        } else {
+            throw new NoSuchElementException("Article with id " + id + " not found");
         }
 
 
     }
 
     @Override
-    public List<CommentDTO> getAllCommentsOfUser(int id){
-        if (userService.checkId(id)){
+    public List<CommentDTO> getAllCommentsOfUser(int id) {
+        if (userService.checkId(id)) {
             UserDTO author = userService.getUserById(id);
             List<Comment> comments = commentDAO.findAllByAuthor(userMapper.fromDtoToUser(author));
-            return checkNoComments(comments,author.getId());
-        }else{
+            return checkNoComments(comments, author.getId());
+        } else {
             throw new NoSuchElementException("User with id : " + id + " not found");
         }
 
     }
 
     @Override
-    public List<CommentDTO> getAllCommentsOfUserAndArticle(int userId, int articleId){
-        if (userService.checkId(userId)){
+    public List<CommentDTO> getAllCommentsOfUserAndArticle(int userId, int articleId) {
+        if (userService.checkId(userId) && articleService.checkArticle(articleId)) {
             UserDTO author = userService.getUserById(userId);
-            List<Comment> comments = commentDAO.findAllByAuthorAndArticle_id(userMapper.fromDtoToUser(author),articleId);
-            return checkNoCommentsOrArticle(comments,userId,articleId);
-        }else{
-            throw new NoSuchElementException("User "+ userId +" or article " + articleId + " not found");
+            List<Comment> comments = commentDAO.findAllByAuthorAndArticle_id(userMapper.fromDtoToUser(author), articleId);
+            return checkNoCommentsOrArticle(comments, userId, articleId);
+        } else {
+            throw new NoSuchElementException("User " + userId + " or article " + articleId + " not found");
         }
-
     }
 
-    public List<CommentDTO> checkNoComments(List<Comment> comments, int userId){
-        if(comments.isEmpty()){
-            throw new NoSuchElementException("User with id : " + userId + "has no comments");
+    @Override
+    public CommentDTO addCommentToArticle(int articleId, int userId, String content){
+        CommentDTO commentDTO = new CommentDTO();
+        if (userService.checkId(userId) && articleService.checkArticle(articleId)) {
+            UserDTO author = userService.getUserById(userId);
+            ArticleDTO articleDTO =articleService.getArticle(articleId);
+            commentDTO.setAuthor(author);
+            commentDTO.setArticle(articleDTO);
+            commentDTO.setContent(content);
+            return mapper.fromCommentToCommentDTO(commentDAO.save(mapper.fromDtoToComment(commentDTO)));
         }else {
+            throw new NoSuchElementException("Article with id " + articleId + " not found");
+        }
+    }
+
+    public List<CommentDTO> checkNoComments(List<Comment> comments, int userId) {
+        if (comments.isEmpty()) {
+            throw new NoSuchElementException("User with id : " + userId + "has no comments");
+        } else {
             List<CommentDTO> commentDTOS = new ArrayList<>();
             comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
             return commentDTOS;
         }
 
     }
-    public List<CommentDTO> checkNoCommentsOrArticle(List<Comment> comments, int userId,int articleId){
-        if(comments.isEmpty()){
+
+    public List<CommentDTO> checkNoCommentsOrArticle(List<Comment> comments, int userId, int articleId) {
+        if (comments.isEmpty()) {
             throw new NoSuchElementException("User with id: " + userId + " has no comments on article: " + articleId);
-        }else {
+        } else {
             List<CommentDTO> commentDTOS = new ArrayList<>();
             comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
             return commentDTOS;
