@@ -1,20 +1,23 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.model.dto.UserDTO;
-import com.openclassrooms.mddapi.model.entities.User;
 import com.openclassrooms.mddapi.model.mappers.UserMapper;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.openclassrooms.mddapi.config.Constants.*;
+import static org.springframework.http.ResponseEntity.ok;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -43,5 +46,18 @@ public class UserController {
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/followed/")
+    public ResponseEntity<Map<Object, Object>> getfollowedThemeOfUser(@AuthenticationPrincipal Jwt principal) {
+
+        Map<Object, Object> model = new HashMap<>();
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        model.put(THEMES, userLoggedIn.getFollowedThemes());
+        model.put(MESSAGE, "All themes of user:"+ userLoggedIn.getEmail());
+        return ok(model);
     }
 }

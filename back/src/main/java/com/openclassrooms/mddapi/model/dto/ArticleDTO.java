@@ -22,6 +22,6 @@ public class ArticleDTO   implements Serializable {
     private ThemeDTO theme;
     private String content;
     private UserDTO author;
-    private List<UserDTO> followers;
+
     private Set<CommentDTO> comments;
 }

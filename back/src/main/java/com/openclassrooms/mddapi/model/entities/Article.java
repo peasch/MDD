@@ -31,14 +31,6 @@ public class Article {
     @JoinColumn(name = "user_id")
     private User author ;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "FOLLOW",
-            joinColumns = @JoinColumn( name = "article_id" ),
-            inverseJoinColumns = @JoinColumn( name = "user_id" ) )
-    private List<User> followers;
-
-
     @OneToMany(mappedBy = "article")
     private Set<Comment> comments = new HashSet<>();
 }

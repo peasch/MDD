@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static com.openclassrooms.mddapi.config.Constants.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,8 +31,7 @@ public class ArticleController {
 
     private final ArticleService service;
     private final UserService userService;
-    private static final String SOMETHING_WRONG = "something went wrong with this article";
-    private static final String MESSAGE = "message";
+
 
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
@@ -116,5 +116,4 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
     }
-
 }

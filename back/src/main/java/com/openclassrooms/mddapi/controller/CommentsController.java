@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.model.dto.CommentDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
-import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +20,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static com.openclassrooms.mddapi.config.Constants.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -31,8 +31,6 @@ public class CommentsController {
 
     private final UserService userService;
     private final CommentService commentService;
-    private static final String COMMENTS = "comments";
-    private static final String MESSAGE = "message";
 
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
@@ -116,7 +114,7 @@ public class CommentsController {
         try{
             CommentDTO commentDTO = commentService.addCommentToArticle(articleId, userId, content);
             model.put("comment saved", commentDTO);
-            model.put("message", "comment added");
+            model.put(MESSAGE, "comment added");
             return ok(model);
         } catch (NoSuchElementException e) {
             model.put(MESSAGE, e.getMessage());
@@ -124,6 +122,7 @@ public class CommentsController {
         }
 
     }
+
 
 
 }

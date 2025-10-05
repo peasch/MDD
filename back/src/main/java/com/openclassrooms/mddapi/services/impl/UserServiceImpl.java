@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services.impl;
 
+import com.openclassrooms.mddapi.model.dto.ThemeDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import com.openclassrooms.mddapi.model.mappers.UserMapper;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -65,5 +67,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkId(Integer id) {
         return userDao.findById(id).isPresent();
+    }
+
+    @Override
+    public UserDTO addThemeToFollowed(UserDTO user, ThemeDTO theme){
+        if (this.checkEmail(user.getEmail())) {
+            List<ThemeDTO> themes = user.getFollowedThemes();
+            themes.add(theme);
+            user.setFollowedThemes(themes);
+            userDao.save(mapper.fromDtoToUser(user));
+            return mapper.fromUserToDto(userDao.findById(user.getId()));
+        } else {
+            throw new ValidationException("error while adding theme");
+        }
+
     }
 }

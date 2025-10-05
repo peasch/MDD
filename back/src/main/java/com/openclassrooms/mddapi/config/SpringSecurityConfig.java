@@ -33,14 +33,14 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable).cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("api/user").hasRole("USER")
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/register").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
-                ).oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())).build();
+                ).oauth2ResourceServer(oauth2 ->
+                        oauth2.jwt(Customizer.withDefaults())).build();
     }
 
 

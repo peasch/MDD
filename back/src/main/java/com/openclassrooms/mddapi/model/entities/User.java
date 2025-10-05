@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,8 +29,13 @@ public class User implements Serializable {
     @Column(name="password")
     private String password;
 
-    @OneToMany
-    private Set<Article> followedArticles = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "follow",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "theme_id")
+    )
+    private List<Theme> followedThemes;
 
     @OneToMany(mappedBy = "author")
     private Set<Article> writtenArticles = new HashSet<>();

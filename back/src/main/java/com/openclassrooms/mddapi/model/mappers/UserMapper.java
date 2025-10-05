@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Component
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {ThemeMapper.class})
 public interface UserMapper {
 
 

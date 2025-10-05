@@ -3,6 +3,8 @@ package com.openclassrooms.mddapi.model.mappers;
 import com.openclassrooms.mddapi.model.dto.ArticleDTO;
 import com.openclassrooms.mddapi.model.entities.Article;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
@@ -17,4 +19,8 @@ public interface ArticleMapper {
     Article fromDtoToArticle(ArticleDTO articleDTO);
 
     ArticleDTO  fromArticleToDto(Article article);
+
+    @Named("withoutComments")
+    @Mapping(target = "comments", ignore = true)
+    ArticleDTO  fromArticleToDtoWithComments(Article article);
 }

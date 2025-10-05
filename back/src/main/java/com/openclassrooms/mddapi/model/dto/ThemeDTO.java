@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,5 +16,5 @@ public class ThemeDTO {
 
     private int id;
     private String name;
-    private Set<ArticleDTO> articles;
+    private List<UserDTO> followers;
 }

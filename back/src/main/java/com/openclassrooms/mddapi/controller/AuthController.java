@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static com.openclassrooms.mddapi.config.Constants.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -47,11 +48,11 @@ public class AuthController {
 
             String token = jwtService.generateToken(userLoggedin);
 
-            model.put("message", "logged in");
+            model.put(MESSAGE, "logged in");
             model.put("token", token);
             return ok(model);
         } catch (Exception e) {
-            model.put("message", "Bad Credentials");
+            model.put(MESSAGE, "Bad Credentials");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
 
@@ -68,7 +69,7 @@ public class AuthController {
                 userService.saveUser(userDto);
                 UserDTO saved = userService.getUserByEmail(userDto.getEmail());
                 Map<Object, Object> model = new HashMap<>();
-                model.put("message", "User registered successfully");
+                model.put(MESSAGE, "User registered successfully");
                 model.put("token", jwtService.generateToken(saved));
                 return ok(model);
             } catch (Exception e) {
@@ -78,7 +79,7 @@ public class AuthController {
             }
         } else {
             Map<Object, Object> error = new HashMap<>();
-            error.put("message", "Email already registered");
+            error.put(MESSAGE, "Email already registered");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }
@@ -88,7 +89,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<Map<Object, Object>> getMe(@AuthenticationPrincipal Jwt principal) {
         Map<Object, Object> model = new HashMap<>();
-        model.put("message", "get your informations");
+        model.put(MESSAGE, "get your informations");
         model.put("mail", userService.getUserByEmail(principal.getClaimAsString("sub")));
         return ok(model);
 
