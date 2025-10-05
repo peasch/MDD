@@ -62,8 +62,8 @@ public class UserServiceImpl implements UserService {
         return userDao.findByEmail(email) != null;
 
     }
-
-    private boolean checkId(Integer id) {
+    @Override
+    public boolean checkId(Integer id) {
         return userDao.findById(id).isPresent();
     }
 }

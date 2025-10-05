@@ -12,4 +12,5 @@ public interface UserService {
 
     void deleteUserById(int id);
 
+    boolean checkId(Integer id);
 }

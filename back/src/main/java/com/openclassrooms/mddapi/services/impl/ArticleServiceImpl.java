@@ -7,7 +7,6 @@ import com.openclassrooms.mddapi.model.entities.Article;
 import com.openclassrooms.mddapi.model.mappers.ArticleMapper;
 import com.openclassrooms.mddapi.repositories.ArticleDAO;
 import com.openclassrooms.mddapi.services.ArticleService;
-import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +25,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Qualifier("articleMapper")
     private final ArticleMapper mapper;
-    private final CommentService commentService;
+
     private final UserService userService;
     private final ThemeService themeService;
 
@@ -35,6 +35,14 @@ public class ArticleServiceImpl implements ArticleService {
         List<ArticleDTO> articlesDTO = new ArrayList<>();
         articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
         return articlesDTO;
+    }
+
+    @Override
+    public List<ArticleDTO> getAllArticlesOfTheme(int id){
+    List<Article> articles = articleDAO.findArticlesByTheme_Id(id);
+    List<ArticleDTO> articlesDTO = new ArrayList<>();
+    articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
+    return articlesDTO;
     }
 
     @Override
@@ -62,15 +70,24 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDTO getArticle(int id) {
-        return mapper.fromArticleToDto(articleDAO.findById(id));
+        if (checkArticle(id)) {
+            return mapper.fromArticleToDto(articleDAO.findById(id));
+        }else{
+            throw new NoSuchElementException("Article with id " + id + " not found");
+        }
     }
 
     @Override
     public void deleteArticle(int id) {
         if (articleDAO.existsById(id)) {
-            commentService.deleteAllCommentsOfArticle(id);
+
             articleDAO.deleteById(id);
         }
     }
+    @Override
+    public boolean checkArticle(int id){
+        return articleDAO.existsById(id);
+    }
+
 
 }

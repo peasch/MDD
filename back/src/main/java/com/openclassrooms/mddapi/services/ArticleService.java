@@ -8,6 +8,8 @@ public interface ArticleService {
 
     List<ArticleDTO> getArticles();
 
+    List<ArticleDTO> getAllArticlesOfTheme(int id);
+
     ArticleDTO save(int themeId, String content, int userId);
 
     ArticleDTO updateArticle(int id,ArticleDTO articleDTO);
@@ -15,4 +17,6 @@ public interface ArticleService {
     ArticleDTO getArticle(int id);
 
     void deleteArticle(int id);
+
+    boolean checkArticle(int id);
 }

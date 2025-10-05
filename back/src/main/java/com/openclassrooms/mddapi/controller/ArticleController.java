@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -29,6 +30,8 @@ public class ArticleController {
 
     private final ArticleService service;
     private final UserService userService;
+    private static final String SOMETHING_WRONG ="something went wrong with this article";
+    private static final String  MESSAGE = "message";
 
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
@@ -54,12 +57,12 @@ public class ArticleController {
         try {
             ArticleDTO articleDTO = service.save(themeId, content, userLoggedIn.getId());
             Map<Object, Object> model = new HashMap<>();
-            model.put("message", "Article created !");
+            model.put(MESSAGE, "Article created !");
             model.put("article", articleDTO);
             return ok(model);
-        } catch (Exception e) {
+        } catch (Exception _) {
             Map<Object, Object> error = new HashMap<>();
-            error.put("message", "something went wrong with this article");
+            error.put(MESSAGE,SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }
@@ -73,15 +76,35 @@ public class ArticleController {
         try {
             ArticleDTO articleUpdatedDTO = service.updateArticle(id,articleDTO);
             Map<Object, Object> model = new HashMap<>();
-            model.put("message", "Article updated!");
+            model.put(MESSAGE, "Article updated!");
             model.put("article", articleUpdatedDTO);
             return ok(model);
-        } catch (Exception e) {
+        } catch (Exception _) {
             Map<Object, Object> error = new HashMap<>();
-            error.put("message", "something went wrong with this article");
+            error.put(MESSAGE, SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/theme/{id}")
+    public ResponseEntity<Map<Object, Object>> getAllArticlesOfTheme(@PathVariable(name ="id")int themeId) {
+        Map<Object, Object> model = new HashMap<>();
+
+        try{
+            List<ArticleDTO> articleDTOs = service.getAllArticlesOfTheme(themeId);
+            model.put("articles", articleDTOs);
+            model.put(MESSAGE, "articles found!");
+            return ok(model);
+        }catch (Exception _){
+            Map<Object, Object> error = new HashMap<>();
+            error.put(MESSAGE, SOMETHING_WRONG);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        }
+    }
+
 
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
@@ -91,11 +114,11 @@ public class ArticleController {
         try{
             service.deleteArticle(id);
             Map<Object, Object> model = new HashMap<>();
-            model.put("message", "Article deleted!");
+            model.put(MESSAGE, "Article deleted!");
             return ok(model);
-        }catch(Exception e){
+        }catch(Exception _){
             Map<Object, Object> error = new HashMap<>();
-            error.put("message", "something went wrong with deleting article");
+            error.put(MESSAGE, SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
         }
     }

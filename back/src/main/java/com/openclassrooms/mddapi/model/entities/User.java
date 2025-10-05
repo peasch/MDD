@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.model.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -34,4 +33,7 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "author")
     private Set<Article> writtenArticles = new HashSet<>();
+
+    @OneToMany(mappedBy = "author")
+    private Set<Comment> writtenComments = new HashSet<>();
 }

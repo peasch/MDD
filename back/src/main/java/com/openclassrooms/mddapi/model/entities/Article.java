@@ -38,6 +38,7 @@ public class Article {
             inverseJoinColumns = @JoinColumn( name = "user_id" ) )
     private List<User> followers;
 
-    @OneToMany(mappedBy = "article_id")
+
+    @OneToMany(mappedBy = "article")
     private Set<Comment> comments = new HashSet<>();
 }
