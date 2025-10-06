@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,7 @@ import java.util.Map;
 import static org.springframework.http.ResponseEntity.ok;
 import static com.openclassrooms.mddapi.config.Constants.*;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
@@ -58,7 +60,8 @@ public class ArticleController {
             model.put(MESSAGE, "Article created !");
             model.put("article", articleDTO);
             return ok(model);
-        } catch (Exception _) {
+        } catch (Exception e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
@@ -76,7 +79,8 @@ public class ArticleController {
             model.put(MESSAGE, "Article updated!");
             model.put("article", articleUpdatedDTO);
             return ok(model);
-        } catch (Exception _) {
+        } catch (Exception e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
@@ -94,7 +98,8 @@ public class ArticleController {
             model.put("articles", articleDTOs);
             model.put(MESSAGE, "articles found!");
             return ok(model);
-        } catch (Exception _) {
+        } catch (Exception e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, SOMETHING_WRONG);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
@@ -116,4 +121,6 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
     }
+
+
 }

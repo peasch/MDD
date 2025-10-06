@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,7 @@ import java.util.NoSuchElementException;
 import static org.springframework.http.ResponseEntity.ok;
 import static com.openclassrooms.mddapi.config.Constants.*;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
@@ -69,8 +71,10 @@ public class CommentsController {
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfUser(id));
             model.put(MESSAGE, "Comments of User id :" + id);
+            log.info("get comments of user id :"  );
             return ok(model);
         } catch (NoSuchElementException e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
         }
@@ -93,6 +97,7 @@ public class CommentsController {
             model.put(MESSAGE, "Comments of User id :" + userId);
             return ok(model);
         } catch (NoSuchElementException e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
         }
@@ -117,6 +122,7 @@ public class CommentsController {
             model.put(MESSAGE, "comment added");
             return ok(model);
         } catch (NoSuchElementException e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(model);
         }

@@ -22,7 +22,4 @@ public class Theme implements Serializable {
     @Column(name ="name")
     private String name;
 
-
-    @ManyToMany(mappedBy = "followedThemes")
-    private List<User> followers;
 }

@@ -20,7 +20,4 @@ public interface ArticleMapper {
 
     ArticleDTO  fromArticleToDto(Article article);
 
-    @Named("withoutComments")
-    @Mapping(target = "comments", ignore = true)
-    ArticleDTO  fromArticleToDtoWithComments(Article article);
 }

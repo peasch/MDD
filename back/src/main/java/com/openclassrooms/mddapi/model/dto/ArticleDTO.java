@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -23,5 +22,4 @@ public class ArticleDTO   implements Serializable {
     private String content;
     private UserDTO author;
 
-    private Set<CommentDTO> comments;
 }

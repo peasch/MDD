@@ -10,5 +10,5 @@ public interface ThemeService {
     List<ThemeDTO> getAllThemes();
 
 
-    ThemeDTO addUserToThemeFollowers(String email, ThemeDTO theme);
+
 }

@@ -41,7 +41,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleDTO> getAllArticlesOfTheme(int id){
     List<Article> articles = articleDAO.findArticlesByTheme_Id(id);
     List<ArticleDTO> articlesDTO = new ArrayList<>();
-    articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDtoWithComments(article)));
+    articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
     return articlesDTO;
     }
 

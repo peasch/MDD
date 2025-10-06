@@ -56,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getAllCommentsOfUser(int id) {
         if (userService.checkId(id)) {
             UserDTO author = userService.getUserById(id);
+
             List<Comment> comments = commentDAO.findAllByAuthor(userMapper.fromDtoToUser(author));
             return checkNoComments(comments, author.getId());
         } else {

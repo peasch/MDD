@@ -16,5 +16,4 @@ public class ThemeDTO {
 
     private int id;
     private String name;
-    private List<UserDTO> followers;
 }

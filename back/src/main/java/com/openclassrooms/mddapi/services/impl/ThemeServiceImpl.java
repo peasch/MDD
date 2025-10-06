@@ -41,14 +41,6 @@ public class ThemeServiceImpl implements ThemeService {
         return themeDTOS;
     }
 
-    @Override
-    public ThemeDTO addUserToThemeFollowers(String email, ThemeDTO theme) {
 
-        UserDTO user = userService.getUserByEmail(email);
-        List<UserDTO> followersDTOS = new ArrayList<>();
-        followersDTOS.add(user);
-        theme.setFollowers(followersDTOS);
-        return themeMapper.fromThemeToDto(themeDAO.save(themeMapper.fromDtoToTheme(theme)));
-    }
 
 }

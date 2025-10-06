@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.springframework.http.ResponseEntity.ok;
 import static com.openclassrooms.mddapi.config.Constants.*;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
@@ -53,12 +56,14 @@ public class ThemeController {
         try {
             ThemeDTO themeDTO =themeService.getThemeById(themeId);
            UserDTO userUpdated =userService.addThemeToFollowed(userLoggedIn, themeDTO);
-            model.put(THEME, themeService.addUserToThemeFollowers(userLoggedIn.getEmail(),themeDTO));
+
             model.put("user",userUpdated);
             model.put(MESSAGE, "Followed theme !");
+            log.info("Followed theme !"+ userUpdated.toString());
             return ok(model);
-        } catch (Exception _) {
+        } catch (Exception e) {
             model.put(MESSAGE, SOMETHING_WRONG_FOLLOW);
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
     }

@@ -16,7 +16,5 @@ public interface ThemeMapper {
 
     Theme  fromDtoToTheme(ThemeDTO themeDTO);
 
-    @Named("withoutfollowers")
-    @Mapping(target = "followers", ignore = true)
     ThemeDTO  fromThemeToDto(Theme theme);
 }
