@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +18,10 @@ public class ArticleDTO   implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
+    private String title;
     private ThemeDTO theme;
     private String content;
     private UserDTO author;
+    private Date createdAt;
 
 }

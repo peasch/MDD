@@ -71,7 +71,7 @@ public class CommentsController {
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfUser(id));
             model.put(MESSAGE, "Comments of User id :" + id);
-            log.info("get comments of user id :"  );
+            log.info("get comments of user id :"+ id );
             return ok(model);
         } catch (NoSuchElementException e) {
             log.error(e.getMessage());

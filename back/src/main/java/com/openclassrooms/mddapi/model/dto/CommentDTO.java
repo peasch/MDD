@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -18,4 +20,6 @@ public class CommentDTO {
     private UserDTO author;
 
     private ArticleDTO article;
+
+    private Date createdAt;
 }
