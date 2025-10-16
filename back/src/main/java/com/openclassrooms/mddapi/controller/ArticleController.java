@@ -67,15 +67,17 @@ public class ArticleController {
         }
     }
 
-    @Operation(summary = "all articles method", description = "get all articles in database")
+    @Operation(summary = "update Article method", description = "update an article in database, only if author")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @PutMapping("/update/{id}")
-    public ResponseEntity<Map<Object, Object>> updateArticle(@PathVariable(name = "id") int id, @Valid @RequestBody ArticleDTO articleDTO) {
+    public ResponseEntity<Map<Object, Object>> updateArticle(@PathVariable(name = "id") int id,
+                                                             @Valid @RequestBody ArticleDTO articleDTO,
+                                                             @AuthenticationPrincipal Jwt principal) {
         Map<Object, Object> model = new HashMap<>();
-
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         try {
-            ArticleDTO articleUpdatedDTO = service.updateArticle(id, articleDTO);
+            ArticleDTO articleUpdatedDTO = service.updateArticle(id, articleDTO,userLoggedIn);
             model.put(MESSAGE, "Article updated!");
             model.put("article", articleUpdatedDTO);
             return ok(model);
@@ -86,7 +88,7 @@ public class ArticleController {
         }
     }
 
-    @Operation(summary = "all articles method", description = "get all articles in database")
+    @Operation(summary = "all articles of a theme", description = "get all articles in database, refer to a theme")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @GetMapping("/theme/{id}")
@@ -106,14 +108,16 @@ public class ArticleController {
     }
 
 
-    @Operation(summary = "all articles method", description = "get all articles in database")
+    @Operation(summary = "delete method", description = "delete an article from database, only if author")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @DeleteMapping({"delete/{id}"})
-    public ResponseEntity<Map<Object, Object>> deleteArticle(@PathVariable(name = "id") int id) {
+    public ResponseEntity<Map<Object, Object>> deleteArticle(@PathVariable(name = "id") int id,
+                                                             @AuthenticationPrincipal Jwt principal) {
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         Map<Object, Object> model = new HashMap<>();
         try {
-            service.deleteArticle(id);
+            service.deleteArticle(id,userLoggedIn);
             model.put(MESSAGE, "Article deleted!");
             return ok(model);
         } catch (Exception _) {

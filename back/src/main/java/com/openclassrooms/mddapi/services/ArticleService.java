@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.model.dto.ArticleDTO;
+import com.openclassrooms.mddapi.model.dto.UserDTO;
 
 import java.util.List;
 
@@ -12,11 +13,11 @@ public interface ArticleService {
 
     ArticleDTO save(int themeId, String content, int userId);
 
-    ArticleDTO updateArticle(int id,ArticleDTO articleDTO);
+    ArticleDTO updateArticle(int id, ArticleDTO articleDTO, UserDTO userDTO);
 
     ArticleDTO getArticle(int id);
 
-    void deleteArticle(int id);
+    void deleteArticle(int id, UserDTO userDTO);
 
     boolean checkArticle(int id);
 }

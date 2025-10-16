@@ -35,4 +35,7 @@ public class Article {
 
     @Column(name="created_at")
     private Date createdAt;
+
+    @Column(name="updateAt")
+    private Date updatedAt;
 }

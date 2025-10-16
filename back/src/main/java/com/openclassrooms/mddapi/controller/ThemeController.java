@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.model.dto.ThemeDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
@@ -17,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import static org.springframework.http.ResponseEntity.ok;
 import static com.openclassrooms.mddapi.config.Constants.*;
+import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
 @CrossOrigin(origins = "*")
@@ -39,7 +37,7 @@ public class ThemeController {
     @GetMapping()
     public ResponseEntity<Map<Object, Object>> getThemes() {
         Map<Object, Object> model = new HashMap<>();
-        model.put(COMMENTS, themeService.getAllThemes());
+        model.put("themes", themeService.getAllThemes());
         model.put(MESSAGE, "All themes !");
         return ok(model);
     }
@@ -49,17 +47,40 @@ public class ThemeController {
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/follow/{id}")
     public ResponseEntity<Map<Object, Object>> follow(@PathVariable(name = "id") int themeId,
-                                                      @AuthenticationPrincipal Jwt principal){
+                                                      @AuthenticationPrincipal Jwt principal) {
 
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         Map<Object, Object> model = new HashMap<>();
         try {
-            ThemeDTO themeDTO =themeService.getThemeById(themeId);
-           UserDTO userUpdated =userService.addThemeToFollowed(userLoggedIn, themeDTO);
+            UserDTO userUpdated = userService.addThemeToFollowed(userLoggedIn, themeId);
 
-            model.put("user",userUpdated);
+            model.put("user", userUpdated);
             model.put(MESSAGE, "Followed theme !");
-            log.info("Followed theme !"+ userUpdated.toString());
+            log.info("Followed theme !" + userUpdated.toString());
+            return ok(model);
+        } catch (Exception e) {
+            model.put(MESSAGE, SOMETHING_WRONG_FOLLOW);
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
+        }
+    }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @PostMapping("/unfollow/{id}")
+    public ResponseEntity<Map<Object, Object>> unFollow(@PathVariable(name = "id") int themeId,
+                                                        @AuthenticationPrincipal Jwt principal) {
+
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        Map<Object, Object> model = new HashMap<>();
+        try {
+
+            UserDTO userUpdated = userService.removeThemeToFollowed(userLoggedIn, themeId);
+
+            model.put("user", userUpdated);
+            model.put(MESSAGE, "Unfollowed theme !");
+            log.info("unfollowed theme !" + userUpdated.toString());
             return ok(model);
         } catch (Exception e) {
             model.put(MESSAGE, SOMETHING_WRONG_FOLLOW);

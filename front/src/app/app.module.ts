@@ -11,18 +11,21 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
-import { HeaderComponent } from './app/core/header/header.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
+import { HeaderComponent } from './core/header/header.component';
+
 import {NgOptimizedImage} from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {JwtInterceptor} from "./app/interceptors/jwt.interceptor";
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { ArticlesComponent } from './pages/articles/articles.component';
+
+import { ArticleCardComponent } from './cards/article-card/article-card.component';
+import {CoreModule} from "./core/core.module";
+import {SharedModule} from "./shared/shared.module";
 
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, HeaderComponent, NotFoundComponent, ArticlesComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent, ArticleCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,9 +35,10 @@ import { ArticlesComponent } from './pages/articles/articles.component';
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
-    MatToolbarModule,
     NgOptimizedImage,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

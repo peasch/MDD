@@ -23,5 +23,6 @@ public class ArticleDTO   implements Serializable {
     private String content;
     private UserDTO author;
     private Date createdAt;
+    private Date updatedAt;
 
 }

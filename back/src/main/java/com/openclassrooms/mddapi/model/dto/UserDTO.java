@@ -28,7 +28,8 @@ public class UserDTO implements Serializable {
 
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String username;
+
     private String password;
 
     private List<ThemeDTO> followedThemes ;

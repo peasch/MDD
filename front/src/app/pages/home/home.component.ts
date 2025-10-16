@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SessionService} from "../services/session.service";
+import {SessionService} from "../../Services/session.service";
 import {map, Observable} from "rxjs";
 
 @Component({

@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import com.openclassrooms.mddapi.model.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.UserDAO;
+import com.openclassrooms.mddapi.services.ThemeService;
 import com.openclassrooms.mddapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDAO userDao;
+    private ThemeService themeService;
 
     @Qualifier("userMapper")
     private final UserMapper mapper;
@@ -48,6 +50,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserByUsername(String username){
+        if (this.checkUsername(username)) {
+            return mapper.fromUserToDto(userDao.findByUsername(username));
+        }else{
+            return null;
+        }
+    }
+
+    @Override
     public UserDTO saveUser(UserDTO userDto) {
         if (!this.checkEmail(userDto.getEmail())) {
             User user = mapper.fromDtoToUser(userDto);
@@ -60,8 +71,14 @@ public class UserServiceImpl implements UserService {
 
 
     }
+
     private boolean checkEmail(String email) {
         return userDao.findByEmail(email) != null;
+
+    }
+
+    private boolean checkUsername(String username) {
+        return userDao.findByUsername(username) != null;
 
     }
     @Override
@@ -70,16 +87,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO addThemeToFollowed(UserDTO user, ThemeDTO theme){
+    public UserDTO addThemeToFollowed(UserDTO user, int themeId){
+
         if (this.checkEmail(user.getEmail())) {
             List<ThemeDTO> themes = user.getFollowedThemes();
-            themes.add(theme);
+            themes.add(themeService.getThemeById(themeId));
             user.setFollowedThemes(themes);
             userDao.save(mapper.fromDtoToUser(user));
             return mapper.fromUserToDto(userDao.findById(user.getId()));
         } else {
             throw new ValidationException("error while adding theme");
         }
+    }
+    @Override
+    public UserDTO removeThemeToFollowed(UserDTO user, int themeId){
 
+        if (this.checkEmail(user.getEmail())) {
+            List<ThemeDTO> themes = user.getFollowedThemes();
+            themes.remove(themeService.getThemeById(themeId));
+            user.setFollowedThemes(themes);
+            userDao.save(mapper.fromDtoToUser(user));
+            return mapper.fromUserToDto(userDao.findById(user.getId()));
+        } else {
+            throw new ValidationException("error while adding theme");
+        }
     }
 }

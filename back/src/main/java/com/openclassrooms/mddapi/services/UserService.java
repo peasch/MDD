@@ -7,6 +7,8 @@ public interface UserService {
 
     UserDTO getUserByEmail(String email);
 
+    UserDTO getUserByUsername(String username);
+
     UserDTO saveUser(UserDTO userDto);
 
     UserDTO getUserById(int id);
@@ -15,5 +17,6 @@ public interface UserService {
 
     boolean checkId(Integer id);
 
-    UserDTO addThemeToFollowed(UserDTO user, ThemeDTO theme);
+    UserDTO addThemeToFollowed(UserDTO user, int themeId);
+    UserDTO removeThemeToFollowed(UserDTO user, int themeId);
 }

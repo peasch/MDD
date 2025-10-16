@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import java.util.Map;
 import static org.springframework.http.ResponseEntity.ok;
 import static com.openclassrooms.mddapi.config.Constants.*;
 
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
@@ -42,8 +44,26 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<Object, Object>> login(@RequestBody LoginDTO logintDto) {
         Map<Object, Object> model = new HashMap<>();
+
         try {
+            String identifier = logintDto.getEmail();
+
+            UserDTO user;
+            if (identifier.contains("@")) {
+                // c’est un email
+                user = userService.getUserByEmail(identifier);
+            } else {
+                // sinon on considère que c’est un username
+                user = userService.getUserByUsername(identifier);
+            }
+
+            if (user == null) {
+                model.put("message", "Bad Credentials before authenticate");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
+            }
+            logintDto.setEmail(user.getEmail());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logintDto.getEmail(), logintDto.getPassword()));
+
             UserDTO userLoggedin = userService.getUserByEmail(logintDto.getEmail());
 
             String token = jwtService.generateToken(userLoggedin);
@@ -52,7 +72,9 @@ public class AuthController {
             model.put("token", token);
             return ok(model);
         } catch (Exception e) {
+            log.error(e.getMessage());
             model.put(MESSAGE, "Bad Credentials");
+            model.put(ERROR, e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
 

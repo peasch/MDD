@@ -25,6 +25,9 @@ public class User implements Serializable {
     @Column(name="email")
     private String email;
 
+    @Column(name="username")
+    private String username;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name="password")
     private String password;

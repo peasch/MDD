@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -38,11 +39,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleDTO> getAllArticlesOfTheme(int id){
-    List<Article> articles = articleDAO.findArticlesByTheme_Id(id);
-    List<ArticleDTO> articlesDTO = new ArrayList<>();
-    articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
-    return articlesDTO;
+    public List<ArticleDTO> getAllArticlesOfTheme(int id) {
+        List<Article> articles = articleDAO.findArticlesByTheme_Id(id);
+        List<ArticleDTO> articlesDTO = new ArrayList<>();
+        articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
+        return articlesDTO;
     }
 
     @Override
@@ -53,41 +54,48 @@ public class ArticleServiceImpl implements ArticleService {
         articleDTO.setTheme(theme);
         articleDTO.setContent(content);
         articleDTO.setAuthor(author);
-
+        articleDTO.setCreatedAt(new Date());
         return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleDTO)));
 
     }
 
     @Override
-    public ArticleDTO updateArticle(int id, ArticleDTO articleDTO) {
-        ArticleDTO articleToUpdate = mapper.fromArticleToDto(articleDAO.findById(id));
-        articleToUpdate.setContent(articleDTO.getContent());
-        articleToUpdate.setAuthor(articleDTO.getAuthor());
-        articleToUpdate.setTheme(articleDTO.getTheme());
+    public ArticleDTO updateArticle(int id, ArticleDTO articleDTO, UserDTO userDTO) {
 
-        return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleToUpdate)));
+        ArticleDTO articleToUpdate = mapper.fromArticleToDto(articleDAO.findById(id));
+        if (userDTO.getEmail().equals(articleDTO.getAuthor().getEmail())) {
+            articleToUpdate.setContent(articleDTO.getContent());
+            articleToUpdate.setAuthor(articleDTO.getAuthor());
+            articleToUpdate.setTheme(articleDTO.getTheme());
+            articleToUpdate.setUpdatedAt(new Date());
+            return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleToUpdate)));
+        } else {
+            throw new NoSuchElementException("vous n'êtes pas l'auteur de l'article");
+        }
     }
 
     @Override
     public ArticleDTO getArticle(int id) {
         if (checkArticle(id)) {
             return mapper.fromArticleToDto(articleDAO.findById(id));
-        }else{
+        } else {
             throw new NoSuchElementException("Article with id " + id + " not found");
         }
     }
 
     @Override
-    public void deleteArticle(int id) {
-        if (articleDAO.existsById(id)) {
-
+    public void deleteArticle(int id, UserDTO userDTO) {
+        ArticleDTO articleToDelete = mapper.fromArticleToDto(articleDAO.findById(id));
+        if (articleDAO.existsById(id) && userDTO.getEmail().equals(articleToDelete.getAuthor().getEmail())) {
             articleDAO.deleteById(id);
+        } else {
+            throw new NoSuchElementException("vous n'êtes pas l'auteur de l'article");
         }
     }
+
     @Override
-    public boolean checkArticle(int id){
+    public boolean checkArticle(int id) {
         return articleDAO.existsById(id);
     }
-
 
 }
