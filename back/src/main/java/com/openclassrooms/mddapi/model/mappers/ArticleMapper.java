@@ -12,7 +12,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Component
 @Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = {ThemeMapper.class,CommentMapper.class})
+        uses = {ThemeMapper.class,CommentMapper.class,UserMapper.class})
 
 public interface ArticleMapper {
 

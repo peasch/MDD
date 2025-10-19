@@ -53,7 +53,7 @@ public class CommentsController {
         Map<Object, Object> model = new HashMap<>();
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfArticle(id));
-            model.put(MESSAGE, "Comments of article id :" + id);
+
             return ok(model);
         } catch (NoSuchElementException _) {
             model.put(MESSAGE, "article not found");
@@ -70,7 +70,7 @@ public class CommentsController {
         model.put("user", id);
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfUser(id));
-            model.put(MESSAGE, "Comments of User id :" + id);
+
             log.info("get comments of user id :"+ id );
             return ok(model);
         } catch (NoSuchElementException e) {
@@ -94,7 +94,7 @@ public class CommentsController {
         model.put("article", articleId);
         try {
             model.put(COMMENTS, commentService.getAllCommentsOfUserAndArticle(userId, articleId));
-            model.put(MESSAGE, "Comments of User id :" + userId);
+
             return ok(model);
         } catch (NoSuchElementException e) {
             log.error(e.getMessage());
@@ -119,7 +119,7 @@ public class CommentsController {
         try{
             CommentDTO commentDTO = commentService.addCommentToArticle(articleId, userId, content);
             model.put("comment saved", commentDTO);
-            model.put(MESSAGE, "comment added");
+
             return ok(model);
         } catch (NoSuchElementException e) {
             log.error(e.getMessage());

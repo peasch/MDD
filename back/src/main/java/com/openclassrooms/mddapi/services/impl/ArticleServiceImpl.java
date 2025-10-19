@@ -98,4 +98,16 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDAO.existsById(id);
     }
 
+    @Override
+    public List<ArticleDTO> getAllFollowedArticles(UserDTO user){
+        List<ThemeDTO> followedTheme = user.getFollowedThemes();
+        List<ArticleDTO> followedArticlesOfTheme = new ArrayList<>();
+        List<ArticleDTO> followedArticles = new ArrayList<>();
+        for(ThemeDTO themeDTO : followedTheme) {
+            followedArticlesOfTheme = this.getAllArticlesOfTheme(themeDTO.getId());
+            followedArticles.addAll(followedArticlesOfTheme);
+
+        }
+        return followedArticles;
+    }
 }

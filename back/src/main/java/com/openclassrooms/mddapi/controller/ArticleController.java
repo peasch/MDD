@@ -57,7 +57,7 @@ public class ArticleController {
         Map<Object, Object> model = new HashMap<>();
         try {
             ArticleDTO articleDTO = service.save(themeId, content, userLoggedIn.getId());
-            model.put(MESSAGE, "Article created !");
+
             model.put("article", articleDTO);
             return ok(model);
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class ArticleController {
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         try {
             ArticleDTO articleUpdatedDTO = service.updateArticle(id, articleDTO,userLoggedIn);
-            model.put(MESSAGE, "Article updated!");
+
             model.put("article", articleUpdatedDTO);
             return ok(model);
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class ArticleController {
         try {
             List<ArticleDTO> articleDTOs = service.getAllArticlesOfTheme(themeId);
             model.put("articles", articleDTOs);
-            model.put(MESSAGE, "articles found!");
+
             return ok(model);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -106,7 +106,24 @@ public class ArticleController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
     }
+    @Operation(summary = "all articles followed by user", description = "get all articles in database,followed bu the connected user")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/followed")
+    public ResponseEntity<Map<Object, Object>> getAllFollowedArticles(@AuthenticationPrincipal Jwt principal) {
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        Map<Object, Object> model = new HashMap<>();
+        try{
+            List<ArticleDTO> articleDTOs = service.getAllFollowedArticles(userLoggedIn);
+            model.put("articles", articleDTOs);
+            return ok(model);
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            model.put(MESSAGE, SOMETHING_WRONG);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
+        }
 
+    }
 
     @Operation(summary = "delete method", description = "delete an article from database, only if author")
     @ApiResponse(responseCode = "200", description = "request ok")
@@ -118,7 +135,7 @@ public class ArticleController {
         Map<Object, Object> model = new HashMap<>();
         try {
             service.deleteArticle(id,userLoggedIn);
-            model.put(MESSAGE, "Article deleted!");
+
             return ok(model);
         } catch (Exception _) {
             model.put(MESSAGE, SOMETHING_WRONG);

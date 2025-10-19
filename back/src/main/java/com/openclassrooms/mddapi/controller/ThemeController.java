@@ -38,7 +38,7 @@ public class ThemeController {
     public ResponseEntity<Map<Object, Object>> getThemes() {
         Map<Object, Object> model = new HashMap<>();
         model.put("themes", themeService.getAllThemes());
-        model.put(MESSAGE, "All themes !");
+
         return ok(model);
     }
 
@@ -55,7 +55,7 @@ public class ThemeController {
             UserDTO userUpdated = userService.addThemeToFollowed(userLoggedIn, themeId);
 
             model.put("user", userUpdated);
-            model.put(MESSAGE, "Followed theme !");
+
             log.info("Followed theme !" + userUpdated.toString());
             return ok(model);
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class ThemeController {
             UserDTO userUpdated = userService.removeThemeToFollowed(userLoggedIn, themeId);
 
             model.put("user", userUpdated);
-            model.put(MESSAGE, "Unfollowed theme !");
+
             log.info("unfollowed theme !" + userUpdated.toString());
             return ok(model);
         } catch (Exception e) {

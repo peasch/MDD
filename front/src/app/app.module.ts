@@ -11,7 +11,6 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
-import { HeaderComponent } from './core/header/header.component';
 
 import {NgOptimizedImage} from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';

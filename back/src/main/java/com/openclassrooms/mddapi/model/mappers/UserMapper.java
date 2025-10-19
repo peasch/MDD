@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.model.mappers;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 

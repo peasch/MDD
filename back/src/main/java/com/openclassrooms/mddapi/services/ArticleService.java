@@ -20,4 +20,6 @@ public interface ArticleService {
     void deleteArticle(int id, UserDTO userDTO);
 
     boolean checkArticle(int id);
+
+    List<ArticleDTO> getAllFollowedArticles(UserDTO user);
 }

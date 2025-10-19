@@ -4,7 +4,10 @@ import {Theme} from "./models/theme.model";
 import {ThemeService} from "./services/theme.service";
 import {Observable} from "rxjs";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+  }
+)
 export class ThemeResolver implements Resolve<Theme[]> {
 constructor(private themeService: ThemeService) {}
 

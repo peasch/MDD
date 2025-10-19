@@ -68,12 +68,11 @@ public class AuthController {
 
             String token = jwtService.generateToken(userLoggedin);
 
-            model.put(MESSAGE, "logged in");
             model.put("token", token);
             return ok(model);
         } catch (Exception e) {
             log.error(e.getMessage());
-            model.put(MESSAGE, "Bad Credentials");
+
             model.put(ERROR, e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
         }
@@ -91,7 +90,7 @@ public class AuthController {
                 userService.saveUser(userDto);
                 UserDTO saved = userService.getUserByEmail(userDto.getEmail());
                 Map<Object, Object> model = new HashMap<>();
-                model.put(MESSAGE, "User registered successfully");
+
                 model.put("token", jwtService.generateToken(saved));
                 return ok(model);
             } catch (Exception e) {
@@ -111,7 +110,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<Map<Object, Object>> getMe(@AuthenticationPrincipal Jwt principal) {
         Map<Object, Object> model = new HashMap<>();
-        model.put(MESSAGE, "get your informations");
+
         model.put("mail", userService.getUserByEmail(principal.getClaimAsString("sub")));
         return ok(model);
 
