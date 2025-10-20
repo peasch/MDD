@@ -44,6 +44,24 @@ public class ArticleController {
         model.put("articles", service.getArticles());
         return ok(model);
     }
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<Object, Object>> getArticleById(@PathVariable(name = "id") int id,
+                                                              @AuthenticationPrincipal Jwt principal) {
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        Map<Object, Object> model = new HashMap<>();
+        try{
+            model.put("article",service.getArticle(id));
+            return ok(model);
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            model.put(MESSAGE, SOMETHING_WRONG);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(model);
+        }
+    }
+
 
     @Operation(summary = "submit an article method", description = "method to save an article")
     @ApiResponse(responseCode = "200", description = "request ok")

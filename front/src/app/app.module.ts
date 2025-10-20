@@ -17,14 +17,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
-import { ArticleCardComponent } from './cards/article-card/article-card.component';
 import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
 
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent, ArticleCardComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

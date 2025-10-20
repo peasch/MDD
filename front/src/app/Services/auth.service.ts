@@ -26,4 +26,7 @@ export class AuthService {
   public me(): Observable<User> {
     return this.httpClient.get<User>(`${this.pathService}/api/auth/me`);
   }
+  public getCurrentUser(): Observable<User> {
+    return this.httpClient.get<User>(`${this.pathService}/api/auth/me`);
+  }
 }

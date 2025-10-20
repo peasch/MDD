@@ -4,6 +4,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {LoginComponent} from "./pages/login/login.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
+import {AuthGuard} from "./core/guards/auth.guard";
 
 
 
@@ -12,9 +13,9 @@ import {NotFoundComponent} from "./pages/not-found/not-found.component";
 const routes: Routes = [{path: '', component: HomeComponent},
   {title: 'Login', path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path:'mdd',loadChildren:() => import('./mdd/mdd.module').then(m=>m.MddModule)},
+  {path:'mdd',loadChildren:() => import('./mdd/mdd.module').then(m=>m.MddModule),canActivate:[AuthGuard]},
   {path: '404', component: NotFoundComponent},
-  {path: '**', redirectTo: 'mdd'}];
+  {path: '**', redirectTo: 'mdd/articles'}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
