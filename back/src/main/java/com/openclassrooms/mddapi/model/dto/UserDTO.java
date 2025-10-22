@@ -31,7 +31,7 @@ public class UserDTO implements Serializable {
 
     private String username;
 
-    @JsonIgnore
+
     private String password;
 
     private List<ThemeDTO> followedThemes ;
