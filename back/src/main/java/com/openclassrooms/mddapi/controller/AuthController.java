@@ -111,7 +111,7 @@ public class AuthController {
     public ResponseEntity<Map<Object, Object>> getMe(@AuthenticationPrincipal Jwt principal) {
         Map<Object, Object> model = new HashMap<>();
 
-        model.put("mail", userService.getUserByEmail(principal.getClaimAsString("sub")));
+        model.put("user", userService.getUserByEmail(principal.getClaimAsString("sub")));
         return ok(model);
 
     }

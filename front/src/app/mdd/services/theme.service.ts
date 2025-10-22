@@ -14,4 +14,5 @@ export class ThemeService {
       return this.httpClient.get<Theme[]>(`${environment.apiUrl}/api/theme/`);
 
   }
+
 }
