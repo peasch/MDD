@@ -47,12 +47,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDTO save(int themeId, String content, int userId) {
-        UserDTO author = userService.getUserById(userId);
-        ThemeDTO theme = themeService.getThemeById(themeId);
+    public ArticleDTO save(ArticleDTO article) {
+        UserDTO author = userService.getUserById(article.getAuthor().getId());
+        ThemeDTO theme = themeService.getThemeById(article.getTheme().getId());
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setTheme(theme);
-        articleDTO.setContent(content);
+        articleDTO.setTitle(article.getTitle());
+        articleDTO.setContent(article.getContent());
         articleDTO.setAuthor(author);
         articleDTO.setCreatedAt(new Date());
         return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleDTO)));

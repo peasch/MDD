@@ -11,7 +11,7 @@ public interface ArticleService {
 
     List<ArticleDTO> getAllArticlesOfTheme(int id);
 
-    ArticleDTO save(int themeId, String content, int userId);
+    ArticleDTO save(ArticleDTO article);
 
     ArticleDTO updateArticle(int id, ArticleDTO articleDTO, UserDTO userDTO);
 

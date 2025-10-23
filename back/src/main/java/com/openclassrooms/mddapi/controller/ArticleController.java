@@ -67,14 +67,13 @@ public class ArticleController {
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
     @PostMapping("/add")
-    public ResponseEntity<Map<Object, Object>> createArticle(@Valid @RequestParam("theme") int themeId,
-                                                             @Valid @RequestParam("content") String content,
+    public ResponseEntity<Map<Object, Object>> createArticle(@Valid @RequestBody ArticleDTO newArticleDTO,
                                                              @AuthenticationPrincipal Jwt principal) {
 
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         Map<Object, Object> model = new HashMap<>();
         try {
-            ArticleDTO articleDTO = service.save(themeId, content, userLoggedIn.getId());
+            ArticleDTO articleDTO = service.save(newArticleDTO);
 
             model.put("article", articleDTO);
             return ok(model);
