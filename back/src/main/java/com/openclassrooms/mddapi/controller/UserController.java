@@ -33,8 +33,8 @@ public class UserController {
     @Operation(summary = "delete user", description = "delete then chosen user")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> save(@PathVariable("id") String id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
             UserDTO user = this.userService.getUserById(Integer.parseInt(id));
 
@@ -64,4 +64,20 @@ public class UserController {
         log.info(userLoggedIn.getEmail());
         return ok(model);
     }
+
+    @Operation(summary = "all articles method", description = "get all articles in database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<Object, Object>> getUser(@PathVariable("id") String id,
+                                                       @AuthenticationPrincipal Jwt principal) {
+
+        Map<Object, Object> model = new HashMap<>();
+        UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
+        model.put("user", userService.getUserById(Integer.parseInt(id)));
+
+        log.info(userLoggedIn.getEmail());
+        return ok(model);
+    }
+
 }

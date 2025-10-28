@@ -12,4 +12,9 @@ export class CommentService{
   getCommentsOfArticle(id:number):Observable<Comment[]>{
     return this.http.get<Comment[]>(`${environment.apiUrl}/api/comments/`+id);
   }
+
+  addComment(id:number, content:string):Observable<Comment>{
+    return this.http.post<Comment>(`${environment.apiUrl}/api/comments/add/`+id, content);
+  }
+
 }

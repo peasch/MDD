@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class User implements Serializable {
     @Column(name="username")
     private String username;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     @Column(name="password")
     private String password;
 
@@ -43,6 +44,5 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author")
     private Set<Article> writtenArticles = new HashSet<>();
 
-    @OneToMany(mappedBy = "author")
-    private Set<Comment> writtenComments = new HashSet<>();
+
 }

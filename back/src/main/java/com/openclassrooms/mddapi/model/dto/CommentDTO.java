@@ -17,9 +17,9 @@ public class CommentDTO {
 
     private String content;
 
-    private UserDTO author;
+    private int authorId;
 
-    private ArticleDTO article;
+    private int articleId;
 
     private Date createdAt;
 }

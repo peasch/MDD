@@ -15,4 +15,11 @@ export class ThemeService {
 
   }
 
+   unfollowTheme(themeId:number): Observable<any>{
+    return this.httpClient.get(`${environment.apiUrl}/api/theme/unfollow/${themeId}`);
+   }
+
+   followTheme(themeId:number): Observable<any>{
+    return this.httpClient.get(`${environment.apiUrl}/api/theme/follow/${themeId}`);
+   }
 }

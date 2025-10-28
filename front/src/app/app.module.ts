@@ -17,6 +17,7 @@ import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
 import {ProfileComponent} from './pages/profile/profile.component';
 import {MaterialModule} from "./shared/material.module";
+import {MddModule} from "./mdd/mdd.module";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MaterialModule} from "./shared/material.module";
     HttpClientModule,
     CoreModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    MddModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

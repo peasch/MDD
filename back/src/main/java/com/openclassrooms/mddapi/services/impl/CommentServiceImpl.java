@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> getAllCommentsOfArticle(int id) {
         if (articleService.checkArticle(id)) {
-            List<Comment> comments = commentDAO.findAllByArticle_id(id);
+            List<Comment> comments = commentDAO.findAllByArticleId(id);
             List<CommentDTO> commentDTOS = new ArrayList<>();
             comments.forEach(comment -> commentDTOS.add(mapper.fromCommentToCommentDTO(comment)));
             return commentDTOS;
@@ -55,10 +56,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> getAllCommentsOfUser(int id) {
         if (userService.checkId(id)) {
-            UserDTO author = userService.getUserById(id);
-
-            List<Comment> comments = commentDAO.findAllByAuthor(userMapper.fromDtoToUser(author));
-            return checkNoComments(comments, author.getId());
+            List<Comment> comments = commentDAO.findAllByAuthorId(id);
+            return checkNoComments(comments, id);
         } else {
             throw new NoSuchElementException("User with id : " + id + " not found");
         }
@@ -68,8 +67,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> getAllCommentsOfUserAndArticle(int userId, int articleId) {
         if (userService.checkId(userId) && articleService.checkArticle(articleId)) {
-            UserDTO author = userService.getUserById(userId);
-            List<Comment> comments = commentDAO.findAllByAuthorAndArticle_id(userMapper.fromDtoToUser(author), articleId);
+            List<Comment> comments = commentDAO.findAllByAuthorIdAndArticleId(userId, articleId);
             return checkNoCommentsOrArticle(comments, userId, articleId);
         } else {
             throw new NoSuchElementException("User " + userId + " or article " + articleId + " not found");
@@ -80,11 +78,10 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO addCommentToArticle(int articleId, int userId, String content){
         CommentDTO commentDTO = new CommentDTO();
         if (userService.checkId(userId) && articleService.checkArticle(articleId)) {
-            UserDTO author = userService.getUserById(userId);
-            ArticleDTO articleDTO =articleService.getArticle(articleId);
-            commentDTO.setAuthor(author);
-            commentDTO.setArticle(articleDTO);
+            commentDTO.setAuthorId(userId);
+            commentDTO.setArticleId(articleId);
             commentDTO.setContent(content);
+            commentDTO.setCreatedAt(new Date());
             return mapper.fromCommentToCommentDTO(commentDAO.save(mapper.fromDtoToComment(commentDTO)));
         }else {
             throw new NoSuchElementException("Article with id " + articleId + " not found");

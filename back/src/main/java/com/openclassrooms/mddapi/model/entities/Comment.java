@@ -19,14 +19,16 @@ public class Comment implements Serializable {
     @Column(name ="content")
     private String content;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private int authorId;
+
+    // appel userID + username
+
     @JoinColumn(name = "article_id")
-    private Article article;
+    private int articleId;
+
+    //articleID
 
     @Column(name="created_at")
     private Date createdAt;

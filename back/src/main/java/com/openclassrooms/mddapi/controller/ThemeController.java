@@ -21,7 +21,7 @@ import static com.openclassrooms.mddapi.config.Constants.*;
 import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/theme/")
@@ -45,7 +45,7 @@ public class ThemeController {
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
-    @PostMapping("/follow/{id}")
+    @GetMapping("/follow/{id}")
     public ResponseEntity<Map<Object, Object>> follow(@PathVariable(name = "id") int themeId,
                                                       @AuthenticationPrincipal Jwt principal) {
 
@@ -68,7 +68,7 @@ public class ThemeController {
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
-    @PostMapping("/unfollow/{id}")
+    @GetMapping("/unfollow/{id}")
     public ResponseEntity<Map<Object, Object>> unFollow(@PathVariable(name = "id") int themeId,
                                                         @AuthenticationPrincipal Jwt principal) {
 

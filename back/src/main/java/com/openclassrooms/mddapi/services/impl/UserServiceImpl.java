@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDAO userDao;
-    private ThemeService themeService;
+    private final ThemeService themeService;
 
     @Qualifier("userMapper")
     private final UserMapper mapper;

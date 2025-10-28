@@ -109,7 +109,7 @@ public class CommentsController {
     @PostMapping("/add/{id}")
     public ResponseEntity<Map<Object, Object>> addCommentToArticle(@AuthenticationPrincipal Jwt principal,
                                                                    @PathVariable(name = "id") int articleId,
-                                                                   @Valid @RequestParam("content") String content) {
+                                                                   @Valid @RequestBody String content) {
 
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         int userId = userLoggedIn.getId();

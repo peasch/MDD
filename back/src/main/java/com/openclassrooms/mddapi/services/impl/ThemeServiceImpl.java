@@ -21,7 +21,6 @@ public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeDAO themeDAO;
     private final ThemeMapper themeMapper;
-    private final UserService userService;
 
     @Override
     public ThemeDTO getThemeById(Integer id) {
