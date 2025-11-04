@@ -40,21 +40,23 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleDTO> getAllArticlesOfTheme(int id) {
-        List<Article> articles = articleDAO.findArticlesByTheme_Id(id);
+        List<Article> articles = articleDAO.findArticlesByThemeId(id);
         List<ArticleDTO> articlesDTO = new ArrayList<>();
         articles.forEach(article -> articlesDTO.add(mapper.fromArticleToDto(article)));
+        articlesDTO.forEach(article->article.setAuthorUsername(userService.getUserById(article.getAuthorId()).getUsername()));
         return articlesDTO;
     }
 
     @Override
     public ArticleDTO save(ArticleDTO article) {
-        UserDTO author = userService.getUserById(article.getAuthor().getId());
-        ThemeDTO theme = themeService.getThemeById(article.getTheme().getId());
+        UserDTO author = userService.getUserById(article.getAuthorId());
+        ThemeDTO theme = themeService.getThemeById(article.getThemeId());
         ArticleDTO articleDTO = new ArticleDTO();
-        articleDTO.setTheme(theme);
+        articleDTO.setThemeId(theme.getId());
         articleDTO.setTitle(article.getTitle());
         articleDTO.setContent(article.getContent());
-        articleDTO.setAuthor(author);
+        articleDTO.setAuthorId(author.getId());
+
         articleDTO.setCreatedAt(new Date());
         return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleDTO)));
 
@@ -64,10 +66,11 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDTO updateArticle(int id, ArticleDTO articleDTO, UserDTO userDTO) {
 
         ArticleDTO articleToUpdate = mapper.fromArticleToDto(articleDAO.findById(id));
-        if (userDTO.getEmail().equals(articleDTO.getAuthor().getEmail())) {
+        UserDTO articleUser = userService.getUserById(articleDTO.getAuthorId());
+        if (userDTO.getEmail().equals(articleUser.getEmail())) {
             articleToUpdate.setContent(articleDTO.getContent());
-            articleToUpdate.setAuthor(articleDTO.getAuthor());
-            articleToUpdate.setTheme(articleDTO.getTheme());
+            articleToUpdate.setAuthorId(articleDTO.getAuthorId());
+            articleToUpdate.setThemeId(articleDTO.getThemeId());
             articleToUpdate.setUpdatedAt(new Date());
             return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleToUpdate)));
         } else {
@@ -78,7 +81,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDTO getArticle(int id) {
         if (checkArticle(id)) {
-            return mapper.fromArticleToDto(articleDAO.findById(id));
+            ArticleDTO article = mapper.fromArticleToDto(articleDAO.findById(id));
+            article.setAuthorUsername(userService.getUserById(article.getAuthorId()).getUsername());
+            return article;
         } else {
             throw new NoSuchElementException("Article with id " + id + " not found");
         }
@@ -87,7 +92,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void deleteArticle(int id, UserDTO userDTO) {
         ArticleDTO articleToDelete = mapper.fromArticleToDto(articleDAO.findById(id));
-        if (articleDAO.existsById(id) && userDTO.getEmail().equals(articleToDelete.getAuthor().getEmail())) {
+        UserDTO articleUser = userService.getUserById(articleToDelete.getAuthorId());
+        if (articleDAO.existsById(id) && userDTO.getEmail().equals(articleUser.getEmail())) {
             articleDAO.deleteById(id);
         } else {
             throw new NoSuchElementException("vous n'êtes pas l'auteur de l'article");
@@ -100,11 +106,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleDTO> getAllFollowedArticles(UserDTO user){
+    public List<ArticleDTO> getAllFollowedArticles(UserDTO user) {
         List<ThemeDTO> followedTheme = user.getFollowedThemes();
-        List<ArticleDTO> followedArticlesOfTheme = new ArrayList<>();
+        List<ArticleDTO> followedArticlesOfTheme;
         List<ArticleDTO> followedArticles = new ArrayList<>();
-        for(ThemeDTO themeDTO : followedTheme) {
+        for (ThemeDTO themeDTO : followedTheme) {
             followedArticlesOfTheme = this.getAllArticlesOfTheme(themeDTO.getId());
             followedArticles.addAll(followedArticlesOfTheme);
 

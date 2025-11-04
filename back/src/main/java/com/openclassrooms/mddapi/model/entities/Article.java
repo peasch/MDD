@@ -21,17 +21,19 @@ public class Article {
     @Size(max = 100)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theme_id")
-    private Theme theme;
+
+    @Column(name = "theme_id")
+    private int themeId;
 
     @Column(name = "content", length = 2500)
     @Size(max = 2500)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User author ;
+
+    @Column(name = "user_id")
+    private Integer authorId ;
+
+
 
     @Column(name="created_at")
     private Date createdAt;

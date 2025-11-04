@@ -54,14 +54,13 @@ public class UserController {
     @Operation(summary = "all articles method", description = "get all articles in database")
     @ApiResponse(responseCode = "200", description = "request ok")
     @ApiResponse(responseCode = "500", description = "error")
-    @GetMapping("/followed/")
+    @GetMapping("/followed")
     public ResponseEntity<Map<Object, Object>> getfollowedThemeOfUser(@AuthenticationPrincipal Jwt principal) {
 
         Map<Object, Object> model = new HashMap<>();
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         model.put(THEMES, userLoggedIn.getFollowedThemes());
         model.put(MESSAGE, "All themes of user:" + userLoggedIn.getEmail());
-        log.info(userLoggedIn.getEmail());
         return ok(model);
     }
 
@@ -76,7 +75,6 @@ public class UserController {
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         model.put("user", userService.getUserById(Integer.parseInt(id)));
 
-        log.info(userLoggedIn.getEmail());
         return ok(model);
     }
 

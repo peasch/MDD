@@ -11,6 +11,7 @@ public interface ArticleDAO  extends JpaRepository<Article, Integer> {
     Article findById(int id);
     List<Article> findAll();
     void deleteById(Integer id);
-    List<Article> findArticlesByTheme_Id(int id);
+
+    List<Article> findArticlesByThemeId(int themeId);
 
 }

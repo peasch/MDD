@@ -11,7 +11,7 @@ export class SessionService {
   public isLogged = false;
   public user:User | undefined;
   constructor(private authService: AuthService) {}
-  private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
+  private isLoggedSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
 
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();

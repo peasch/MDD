@@ -23,12 +23,9 @@ public class Comment implements Serializable {
     @JoinColumn(name = "user_id")
     private int authorId;
 
-    // appel userID + username
-
     @JoinColumn(name = "article_id")
     private int articleId;
 
-    //articleID
 
     @Column(name="created_at")
     private Date createdAt;

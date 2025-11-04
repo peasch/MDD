@@ -18,10 +18,11 @@ import {SharedModule} from "./shared/shared.module";
 import {ProfileComponent} from './pages/profile/profile.component';
 import {MaterialModule} from "./shared/material.module";
 import {MddModule} from "./mdd/mdd.module";
+import { ProfileThemesComponent } from './pages/profile/profile-themes/profile-themes.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent, ProfileComponent, ProfileThemesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,8 +1,6 @@
 package com.openclassrooms.mddapi.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.openclassrooms.mddapi.model.entities.Theme;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,9 +27,9 @@ public class UserDTO implements Serializable {
 
     private String username;
 
-
+    @JsonIgnore
     private String password;
 
-    private List<ThemeDTO> followedThemes ;
+    private List<ThemeDTO> followedThemes;
 
 }

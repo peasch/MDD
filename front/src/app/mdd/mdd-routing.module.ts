@@ -8,8 +8,10 @@ import {ArticleResolver} from "./Resolvers/article.resolver";
 import {AuthGuard} from "../core/guards/auth.guard";
 import {ArticleDetailsComponent} from "./components/article-details/article-details.component";
 import {NewArticleComponent} from "./components/new-article/new-article.component";
+import {HomeComponent} from "../pages/home/home.component";
 
 const routes: Routes = [
+  { path: '', redirectTo: 'articles', pathMatch: 'full' },
   {path: "themes", component: ThemeListComponent,resolve:{ themes: ThemeResolver },canActivate:[AuthGuard]},
   {path:"articles",component: ArticleListComponent,resolve:{ articles:ArticleResolver },canActivate:[AuthGuard]},
   {path:"articles/:id",component: ArticleDetailsComponent,canActivate:[AuthGuard]},
