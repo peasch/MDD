@@ -1,0 +1,15 @@
+<section class="themes-section">
+  <div class="themes-grid">
+    <ng-container *ngIf="themes$ | async as themes; else loading">
+      <app-theme-list-item
+        *ngFor="let theme of themes; trackBy: trackByTheme"
+        [theme]="theme"
+
+        mode="list"
+        >
+      </app-theme-list-item>
+    </ng-container>
+  </div>
+
+  <ng-template #loading>Chargement…</ng-template>
+</section>

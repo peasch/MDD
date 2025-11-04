@@ -1,0 +1,122 @@
+/* ----- Ton style existant ----- */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* style par défaut des boutons de la toolbar */
+mat-toolbar .mat-mdc-button {
+  opacity: 0.85;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+/* l’onglet ACTIF : Angular ajoute automatiquement .active */
+.active {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: blueviolet;
+  opacity: 1;
+  border-radius: 8px;
+}
+
+/* garder l’icône logout neutre (pas d’effet actif) */
+mat-toolbar .mat-mdc-icon-button.link {
+  margin-right: 4px;
+}
+
+/* Toolbar principale */
+.header-toolbar {
+  position: fixed;  /* Fixe la barre en haut */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;    /* Au-dessus du contenu */
+  display: flex;
+  align-items: center;
+}
+
+/* ----- Responsive + menu mobile ----- */
+.desktop-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Bouton hamburger visible seulement en mobile */
+.hamburger {
+  display: none;
+  margin-left: 8px;
+}
+
+/* Toolbar mobile verticale (affichée via *ngIf) */
+.mobile-toolbar {
+  display: none; /* visible via *ngIf + media query */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  position: fixed;
+  top: 0;
+  right: 0;        /* 👉 Menu aligné à droite */
+  height: 100vh;   /* couvre toute la hauteur */
+  width: 50%;      /* largeur du panneau (tu peux ajuster à 60–80%) */
+  z-index: 1001;
+
+  background-color: #fff; /* couleur de fond opaque */
+  box-shadow: -2px 0 10px rgba(0,0,0,0.25); /* ombre côté gauche */
+  padding: 80px 16px 16px 16px; /* espace en haut sous la toolbar */
+
+  /* animation d’apparition fluide */
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+
+  a[mat-button],
+  button[mat-stroked-button],
+  button[mat-button] {
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+}
+
+/* Quand la toolbar est visible (Angular *ngIf) */
+.mobile-toolbar.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Responsive mobile */
+@media (max-width: 599px) {
+  .desktop-actions {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-flex;
+  }
+
+  .mobile-toolbar {
+    display: flex;
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000; /* juste sous la toolbar mobile */
+  background: rgba(0, 0, 0, 0.45); /* fond sombre semi-transparent */
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+/* Petite animation d'apparition du fond */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

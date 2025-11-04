@@ -1,0 +1,47 @@
+<section >
+  <button mat-icon-button routerLink="" style="margin: 10px 0px 0px 10px">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</section>
+<section style="padding: 5% 10%;justify-content: center">
+  <ng-container>
+  <mat-card>
+    <mat-card-header style="justify-content: center">
+      <mat-card-title>
+        <span>Inscription</span>
+      </mat-card-title>
+    </mat-card-header>
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card-content style="justify-content: center">
+        <div style="text-align: center">
+          <mat-form-field style="justify-content: center">
+            <input matInput placeholder="Nom d'utilisateur" formControlName="name">
+          </mat-form-field>
+        </div>
+        <div style="text-align: center">
+          <mat-form-field style="justify-content: center">
+            <input matInput [type]="'email'" placeholder="Adresse email" formControlName="email">
+          </mat-form-field>
+        </div>
+        <div style="text-align: center">
+          <mat-form-field >
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
+                   formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div style="text-align: center">
+        <button mat-raised-button color="primary" (click)="onSubmit()">
+          S'inscrire
+        </button>
+        </div>
+      </mat-card-content>
+
+      <p *ngIf="onError" class="error">An error occurred</p>
+    </form>
+  </mat-card>
+  </ng-container>
+</section>

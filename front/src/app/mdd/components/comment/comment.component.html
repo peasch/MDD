@@ -1,0 +1,12 @@
+<section class="comment-section">
+  <div class="comment">
+    <div class="comment-header">
+      <span class="username">{{ author.username }}</span>
+      <span class="date">{{ comment.createdAt | date:"EEEE d MMMM yyyy 'à' HH:mm":'fr' }}</span>
+    </div>
+
+    <div class="comment-content">
+      {{ comment.content }}
+    </div>
+  </div>
+</section>

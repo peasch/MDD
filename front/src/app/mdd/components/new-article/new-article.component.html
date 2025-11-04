@@ -1,0 +1,51 @@
+<section class="article-header">
+  <button mat-icon-button routerLink="/mdd/articles" style="margin: 10px 0px 0px 10px">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</section>
+<section>
+  <ng-container>
+    <mat-card>
+      <mat-card-header style="justify-content: center">
+        <mat-card-title>
+          <span>Créer un nouvel article </span>
+        </mat-card-title>
+      </mat-card-header>
+      <form  [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <mat-card-content style="justify-content: center">
+          <div style="text-align: center">
+            <mat-form-field appearance="outline"
+                            [hideRequiredMarker]="hideRequired"
+                            [floatLabel]="floatLabel"
+                            appearance="fill"
+                            style="width: 350px" formGroupName="theme">
+              <mat-label><b>Sélectionnez le thème</b></mat-label>
+              <mat-select formControlName="id"  required>
+                <mat-option *ngFor="let theme of themes" [value]="theme.id"> {{ theme.name }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <mat-form-field appearance="outline" style="width: 350px">
+              <input matInput placeholder="Titre de l'article" formControlName="title">
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <mat-form-field appearance="outline" style="width: 350px">
+            <textarea matInput placeholder="Contenu de l'article"
+                      formControlName="content"
+                      rows="7"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="7"
+                      cdkAutosizeMaxRows="15"></textarea>
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <button mat-raised-button color="primary" >Créer</button>
+          </div>
+        </mat-card-content>
+
+      </form>
+    </mat-card>
+  </ng-container>
+</section>

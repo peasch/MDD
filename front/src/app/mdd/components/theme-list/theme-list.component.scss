@@ -1,0 +1,27 @@
+.themes-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 colonnes desktop */
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+@media (max-width: 600px) {
+  .themes-grid {
+    grid-template-columns: 1fr; /* 1 colonne mobile */
+  }
+}
+
+/* IMPORTANT : ne pas span sur toute la grille */
+.theme-item {
+  /* pas de grid-column ici */
+  width: 100%;
+
+}

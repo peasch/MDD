@@ -1,0 +1,40 @@
+.comment-section {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.comment {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+}
+
+.date {
+  font-style: italic;
+  color: #777;
+}
+
+.comment-content {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #222;
+  white-space: pre-wrap; /* permet de garder les retours à la ligne */
+}

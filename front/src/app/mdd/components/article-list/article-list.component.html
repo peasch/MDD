@@ -1,0 +1,37 @@
+<section class="articles-section" style="justify-content: space-between;margin-left: 10%;margin-right: 10%">
+  <div class="left-buttons">
+    <button mat-raised-button color="primary"
+            routerLink="/mdd/newArticle"
+            matTooltip="Créer un nouvel article">
+      Créer un article
+    </button>
+  </div>
+
+  <div class="right-buttons">
+    <button mat-stroked-button
+            (click)="toggleSortOrder()"
+            style="display: flex; align-items: center; gap: 6px;">
+      <span>Trier par date </span>
+      <mat-icon>{{ sortOrder === 'desc' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+
+    </button>
+  </div>
+</section>
+
+<section class="themes-section">
+  <div class="themes-grid">
+    <ng-container *ngIf="articles$ | async as articles; else noArticles">
+      <ng-container *ngIf="articles.length > 0; else noArticles">
+      <app-article
+        *ngFor="let article of articles"
+        [article]="article"
+        class="theme-item">
+      </app-article>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #noArticles>
+    <div class="empty-state">Aucun thème suivi pour le moment.</div>
+  </ng-template>
+</section>

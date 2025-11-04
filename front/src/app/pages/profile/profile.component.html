@@ -1,0 +1,65 @@
+<section class="article-header">
+  <button mat-icon-button routerLink="/mdd/articles" style="margin: 10px 0px 0px 10px">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</section>
+<section class="abonnements-section">
+  <ng-container>
+    <mat-card >
+      <mat-card-header style="justify-content: center">
+        <mat-card-title style="margin-bottom: 20px">
+          <span style="font-weight: bold">Profil utilisateur</span>
+        </mat-card-title>
+      </mat-card-header>
+      <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-card-content style="justify-content: center">
+          <div style="text-align: center">
+            <mat-form-field style="justify-content: center">
+              <input matInput placeholder="Nom d'utilisateur" formControlName="username">
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <mat-form-field style="justify-content: center">
+              <input matInput [type]="'email'" placeholder="Adresse email" formControlName="email">
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <mat-form-field >
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
+                     formControlName="password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div style="text-align: center">
+            <button mat-raised-button color="primary" (click)="onSubmit()" matTooltip="sauvegarder les nouvelles infos" >
+              Sauvegarder
+            </button>
+          </div>
+        </mat-card-content>
+
+        <p *ngIf="onError" class="error">An error occurred</p>
+      </form>
+    </mat-card>
+  </ng-container>
+</section>
+
+<!-- Abonnements -->
+<section class="abonnements-liste-section">
+  <h1 class="title">Abonnements</h1>
+</section>
+
+<section class="themes-section">
+  <div class="themes-grid" *ngIf="followedThemes?.length; else noThemes">
+    <app-profile-themes *ngFor="let theme of followedThemes"
+                        [theme]="theme"
+                        [(themes)]="followedThemes">
+    </app-profile-themes>
+  </div>
+
+  <ng-template #noThemes>
+    <div class="empty-state">Aucun thème suivi pour le moment.</div>
+  </ng-template>
+</section>

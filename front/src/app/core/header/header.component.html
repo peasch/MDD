@@ -1,0 +1,54 @@
+<mat-toolbar class="header-toolbar">
+  <a class="navbar-brand" routerLink="/mdd/articles">
+    <img [src]="cheminImage" alt="" width="70" height="48" class="d-inline-block">
+  </a>
+
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="$isLogged() | async">
+    <!-- Actions desktop -->
+    <div class="desktop-actions">
+      <button mat-icon-button (click)="logout()" class="link" aria-label="Se déconnecter">
+        <mat-icon>logout</mat-icon>
+      </button>
+
+      <a mat-button routerLink="/mdd/articles" #rla="routerLinkActive" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">Articles</a>
+
+      <a mat-button routerLink="/mdd/themes" #rla="routerLinkActive" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">Thèmes</a>
+
+      <a class="navbar-brand link" mat-button routerLink="/profile">
+        <img [src]="userImg" alt="" width="48" height="48" class="d-inline-block">
+      </a>
+    </div>
+
+    <!-- Hamburger mobile -->
+    <button mat-icon-button class="hamburger"
+            (click)="toggleMobileMenu()"
+            aria-label="Ouvrir le menu"
+            [attr.aria-expanded]="mobileMenuOpen">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<!-- Toolbar verticale mobile -->
+<!-- Overlay sombre derrière le menu -->
+<div class="overlay" *ngIf="mobileMenuOpen" (click)="closeMobileMenu()"></div>
+
+<!-- Toolbar verticale mobile -->
+<mat-toolbar *ngIf="mobileMenuOpen" class="mobile-toolbar show" role="navigation">
+  <a mat-button routerLink="/mdd/articles" (click)="closeMobileMenu()">Articles</a>
+  <a mat-button routerLink="/mdd/themes" (click)="closeMobileMenu()">Thèmes</a>
+  <a mat-button routerLink="/profile" (click)="closeMobileMenu()">
+    <img [src]="userImg" alt="" width="32" height="32" style="border-radius:50%; margin-right:8px;">
+    Profil
+  </a>
+  <button mat-stroked-button (click)="logout(); closeMobileMenu()" class="link">
+    <mat-icon style="margin-right:6px;">logout</mat-icon>
+    Se déconnecter
+  </button>
+</mat-toolbar>
+
+

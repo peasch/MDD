@@ -1,0 +1,40 @@
+:host {
+  display: block;  /* OK */
+  width: 100%;
+  /* surtout PAS: grid-column: 1 / -1; */
+}
+.matcardAction{
+  display: flex;
+  justify-content: center;
+
+  button {
+    transition: all 0.25s ease;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+
+
+    &[mat-raised-button] {
+      background-color: var(--mat-primary, #7550EC);
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        background-color: darken(#1976d2, 5%);
+        cursor: pointer;
+      }
+    }
+
+    &[mat-stroked-button] {
+      background-color: transparent;
+      color: var(--mat-primary, #7550EC);
+      border: 1.5px solid var(--mat-primary, #7550EC);
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(25, 118, 210, 0.08);
+
+      }
+    }
+  }
+}

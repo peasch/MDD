@@ -1,0 +1,55 @@
+<section>
+  <button mat-icon-button routerLink="" style="margin: 10px 0 0 10px">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</section>
+
+<section style="padding: 5% 10%; justify-content: center;">
+  <mat-card>
+    <mat-card-header style="justify-content: center">
+      <mat-card-title>
+        <span>Se Connecter</span>
+      </mat-card-title>
+    </mat-card-header>
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card-content style="justify-content: center">
+
+        <div style="text-align: center">
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Email ou Nom d'utilisateur" formControlName="email">
+          </mat-form-field>
+        </div>
+
+        <div style="text-align: center">
+          <mat-form-field appearance="outline">
+            <input matInput
+                   [type]="hide ? 'password' : 'text'"
+                   placeholder="Mot de passe"
+                   formControlName="password">
+            <button mat-icon-button matSuffix type="button"
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div *ngIf="errorMessage"  style="text-align: center; margin-top: 10px;margin-bottom: 50px">
+          <p class="error-message">
+            {{ errorMessage }}
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;">
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+          </button>
+        </div>
+
+        <!-- 🧠 Affichage clair du message d’erreur -->
+
+      </mat-card-content>
+    </form>
+  </mat-card>
+</section>
