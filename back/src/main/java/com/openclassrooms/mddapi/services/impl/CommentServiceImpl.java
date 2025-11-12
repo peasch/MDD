@@ -1,11 +1,8 @@
 package com.openclassrooms.mddapi.services.impl;
 
-import com.openclassrooms.mddapi.model.dto.ArticleDTO;
 import com.openclassrooms.mddapi.model.dto.CommentDTO;
-import com.openclassrooms.mddapi.model.dto.UserDTO;
 import com.openclassrooms.mddapi.model.entities.Comment;
 import com.openclassrooms.mddapi.model.mappers.CommentMapper;
-import com.openclassrooms.mddapi.model.mappers.UserMapper;
 import com.openclassrooms.mddapi.repositories.CommentDAO;
 import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.CommentService;
@@ -59,9 +56,6 @@ public class CommentServiceImpl implements CommentService {
     /** Service de gestion des articles. */
     private final ArticleService articleService;
 
-    /** Mapper pour les utilisateurs, utilisé pour certaines conversions indirectes. */
-    @Qualifier("userMapper")
-    private final UserMapper userMapper;
 
     /**
      * Récupère tous les commentaires présents dans la base de données.

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from "@angular/forms";
 import {RegisterRequest} from "../../interfaces/registerRequest.interface";
 import {AuthSuccess} from "../../interfaces/authSuccess.interface";
 import {AuthService} from "../../Services/auth.service";
@@ -35,8 +35,7 @@ export class RegisterComponent  {
   });
 
   constructor(private authService: AuthService,
-              private fb: FormBuilder,
-              private router: Router,
+              private fb: FormBuilder
               ) { }
 
   onSubmit() {
@@ -45,8 +44,7 @@ export class RegisterComponent  {
       (response: AuthSuccess) => {
         localStorage.setItem('token', response.token);
 
-      },
-      error => this.onError = true
+      }
     );
   }
   get passwordError(): string | null {

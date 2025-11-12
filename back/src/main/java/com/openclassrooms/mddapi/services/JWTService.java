@@ -48,8 +48,6 @@ public class JWTService {
     /** Composant Spring Security responsable de l’encodage des tokens JWT. */
     private final JwtEncoder jwtEncoder;
 
-    /** Service personnalisé pour la gestion des utilisateurs de Spring Security. */
-    private final CustomUserDetailsService userDetailsService;
 
     /**
      * Génère un token JWT pour un utilisateur donné.
