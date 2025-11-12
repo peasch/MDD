@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public UserDTO getUserById(int id) {
-        return mapper.fromUserToDto(userDao.findById(id));
+        return mapper.fromUserToDtoWithoutPassword(userDao.findById(id));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByEmail(String email) {
         if (checkEmail(email)) {
-            return mapper.fromUserToDto(userDao.findByEmail(email));
+            return mapper.fromUserToDtoWithoutPassword(userDao.findByEmail(email));
         }else{
             return null;
         }
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByUsername(String username){
         if (this.checkUsername(username)) {
-            return mapper.fromUserToDto(userDao.findByUsername(username));
+            return mapper.fromUserToDtoWithoutPassword(userDao.findByUsername(username));
         }else{
             return null;
         }
@@ -60,17 +60,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO saveUser(UserDTO userDto) {
-        if (!this.checkEmail(userDto.getEmail())) {
+
             User user = mapper.fromDtoToUser(userDto);
             user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             userDao.save(user);
-            return mapper.fromUserToDto(userDao.findById(userDto.getId()));
-        } else {
-            throw new ValidationException("already used email");
-        }
+            return mapper.fromUserToDtoWithoutPassword(userDao.findById(userDto.getId()));
+
 
 
     }
+    @Override
+    public UserDTO updateUser(UserDTO userDto) {
+        UserDTO usertoUpdate = mapper.fromUserToDto(userDao.findById(userDto.getId()));
+        if(!userDto.getPassword().isEmpty()) {
+            usertoUpdate.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        }
+        usertoUpdate.setEmail(userDto.getEmail());
+        usertoUpdate.setUsername(userDto.getUsername());
+        usertoUpdate.setName(userDto.getName());
+
+        userDao.save(mapper.fromDtoToUser(usertoUpdate));
+        return mapper.fromUserToDtoWithoutPassword(userDao.findById(userDto.getId()));
+
+
+
+    }
+
 
     private boolean checkEmail(String email) {
         return userDao.findByEmail(email) != null;
@@ -94,7 +109,7 @@ public class UserServiceImpl implements UserService {
             themes.add(themeService.getThemeById(themeId));
             user.setFollowedThemes(themes);
             userDao.save(mapper.fromDtoToUser(user));
-            return mapper.fromUserToDto(userDao.findById(user.getId()));
+            return mapper.fromUserToDtoWithoutPassword(userDao.findById(user.getId()));
         } else {
             throw new ValidationException("error while adding theme");
         }
@@ -107,7 +122,7 @@ public class UserServiceImpl implements UserService {
             themes.remove(themeService.getThemeById(themeId));
             user.setFollowedThemes(themes);
             userDao.save(mapper.fromDtoToUser(user));
-            return mapper.fromUserToDto(userDao.findById(user.getId()));
+            return mapper.fromUserToDtoWithoutPassword(userDao.findById(user.getId()));
         } else {
             throw new ValidationException("error while adding theme");
         }

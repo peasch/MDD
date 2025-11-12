@@ -39,8 +39,10 @@
 
 <!-- Toolbar verticale mobile -->
 <mat-toolbar *ngIf="mobileMenuOpen" class="mobile-toolbar show" role="navigation">
-  <a mat-button routerLink="/mdd/articles" (click)="closeMobileMenu()">Articles</a>
-  <a mat-button routerLink="/mdd/themes" (click)="closeMobileMenu()">Thèmes</a>
+  <a mat-button routerLink="/mdd/articles" (click)="closeMobileMenu()"#rla="routerLinkActive" routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }" >Articles</a>
+  <a mat-button routerLink="/mdd/themes" (click)="closeMobileMenu()" #rla="routerLinkActive" routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }">Thèmes</a>
   <a mat-button routerLink="/profile" (click)="closeMobileMenu()">
     <img [src]="userImg" alt="" width="32" height="32" style="border-radius:50%; margin-right:8px;">
     Profil

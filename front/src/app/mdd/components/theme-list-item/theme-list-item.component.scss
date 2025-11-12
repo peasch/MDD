@@ -2,8 +2,69 @@
   display: block;  /* OK */
   width: 100%;
   /* surtout PAS: grid-column: 1 / -1; */
+
+  /* 🔧 Variables CSS faciles à régler */
+  --card-height: 140px;   /* hauteur fixe de chaque card */
+  --desc-lines: 4;        /* nombre de lignes visibles dans la description */
+  --desc-line-height: 1.4;/* line-height de la description (en facteur) */
 }
-.matcardAction{
+
+/* Card */
+.themeCard {
+  /* même hauteur pour toutes les cards */
+  height: var(--card-height);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* masque le contenu dépassant (sécurité) */
+
+  /* facultatif pour un rendu plus net */
+  border-radius: 12px;
+}
+
+/* Contenu: prend la place disponible entre header et actions */
+.card-content,
+mat-card-content.card-content {
+  flex: 1 1 auto;
+  min-height: 0; /* essentiel avec flex pour autoriser la troncature */
+  margin: 10px 5px;
+  display: flex;
+}
+
+/* Texte tronqué multi-lignes avec ellipsis */
+.description {
+  /* base du multi-line clamp */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--desc-lines);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+
+  /* cohérence hauteur visuelle */
+  line-height: calc(var(--desc-line-height) * 1em);
+  max-height: calc(var(--desc-lines) * var(--desc-line-height) * 1em);
+
+  /* occupe la largeur disponible dans .card-content */
+  flex: 1 1 auto;
+}
+
+/* Alternative moderne si supportée (firefox/chromium récents) */
+@supports (line-clamp: 3) {
+  .description {
+    display: block;
+    -webkit-box-orient: initial;
+    -webkit-line-clamp: initial;
+
+    line-clamp: var(--desc-lines);
+    block-size: calc(var(--desc-lines) * var(--desc-line-height) * 1em);
+    overflow: clip;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Actions: restent en bas de la card, centrées (tes styles + ajustements) */
+.matcardAction {
+  margin-top: auto;            /* pousse la zone d’actions en bas */
   display: flex;
   justify-content: center;
 
@@ -12,7 +73,6 @@
     font-weight: 500;
     border-radius: 8px;
     padding: 0.5rem 1.5rem;
-
 
     &[mat-raised-button] {
       background-color: var(--mat-primary, #7550EC);
@@ -33,8 +93,15 @@
 
       &:hover {
         background-color: rgba(25, 118, 210, 0.08);
-
       }
     }
+  }
+}
+
+/* Responsive (optionnel) : adapte la hauteur et le nombre de lignes */
+@media (max-width: 599px) {
+  :host {
+    --card-height: 240px;
+    --desc-lines: 3;
   }
 }

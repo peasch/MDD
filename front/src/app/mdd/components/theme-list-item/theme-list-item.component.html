@@ -4,17 +4,19 @@
       <span>{{ theme.name | titlecase }}</span>
     </mat-card-title>
   </mat-card-header>
-  <mat-card-content style="margin: 10px 5px">
-    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+
+  <mat-card-content class="card-content">
+    <span class="description">{{ theme.description }}</span>
   </mat-card-content>
+
   <mat-card-actions class="matcardAction">
     <button
       [attr.mat-stroked-button]="hasTheme(theme.id) ? '' : null"
       [attr.mat-raised-button]="!hasTheme(theme.id) ? '' : null"
-      color="primary" (click)="changeFollow(theme.id)"
+      color="primary"
+      (click)="changeFollow(theme.id)"
       [disabled]="hasTheme(theme.id)">
       {{ hasTheme(theme.id) ? 'Déjà abonné' : 'S\'abonner' }}
     </button>
   </mat-card-actions>
 </mat-card>
-

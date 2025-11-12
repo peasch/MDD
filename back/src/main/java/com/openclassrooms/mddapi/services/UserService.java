@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.model.dto.ThemeDTO;
 import com.openclassrooms.mddapi.model.dto.UserDTO;
 
 public interface UserService {
@@ -14,6 +13,9 @@ public interface UserService {
     UserDTO getUserById(int id);
 
     void deleteUserById(int id);
+
+
+    UserDTO updateUser(UserDTO userDto);
 
     boolean checkId(Integer id);
 

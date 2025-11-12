@@ -3,14 +3,16 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </section>
+
 <section class="abonnements-section">
   <ng-container>
-    <mat-card >
+    <mat-card>
       <mat-card-header style="justify-content: center">
         <mat-card-title style="margin-bottom: 20px">
           <span style="font-weight: bold">Profil utilisateur</span>
         </mat-card-title>
       </mat-card-header>
+
       <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-card-content style="justify-content: center">
           <div style="text-align: center">
@@ -18,29 +20,41 @@
               <input matInput placeholder="Nom d'utilisateur" formControlName="username">
             </mat-form-field>
           </div>
+
           <div style="text-align: center">
             <mat-form-field style="justify-content: center">
-              <input matInput [type]="'email'" placeholder="Adresse email" formControlName="email">
+              <input matInput type="email" placeholder="Adresse email" formControlName="email">
             </mat-form-field>
           </div>
+
           <div style="text-align: center">
-            <mat-form-field >
-              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe"
-                     formControlName="password">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide">
+            <mat-form-field>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe" formControlName="password">
+              <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
+              <mat-error *ngIf="passwordError">{{ passwordError }}</mat-error>
             </mat-form-field>
           </div>
+
           <div style="text-align: center">
-            <button mat-raised-button color="primary" (click)="onSubmit()" matTooltip="sauvegarder les nouvelles infos" >
+            <button mat-raised-button color="primary"
+                    type="submit"
+                    [disabled]="form.invalid || form.pending"
+                    matTooltip="sauvegarder les nouvelles infos">
               Sauvegarder
             </button>
           </div>
+
+          <!-- ✅ Message de succès -->
+          <div *ngIf="successMessage" class="success-msg" style="display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:12px; color:#2e7d32;">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ successMessage }}</span>
+          </div>
         </mat-card-content>
 
-        <p *ngIf="onError" class="error">An error occurred</p>
+        <p *ngIf="onError" class="error">Une erreur est survenue.</p>
       </form>
     </mat-card>
   </ng-container>

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from "../../Services/auth.service";
-import { SessionService } from "../../Services/session.service";
-import { Router } from "@angular/router";
-import { LoginRequest } from "../../interfaces/loginRequest.interface";
-import { AuthSuccess } from "../../interfaces/authSuccess.interface";
-import { User } from "../../interfaces/user.interface";
-import { finalize, map, switchMap, take } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from "../../Services/auth.service";
+import {SessionService} from "../../Services/session.service";
+import {Router} from "@angular/router";
+import {LoginRequest} from "../../interfaces/loginRequest.interface";
+import {AuthSuccess} from "../../interfaces/authSuccess.interface";
+import {User} from "../../interfaces/user.interface";
+import {finalize, map, switchMap, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private sessionService: SessionService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     const existingToken = localStorage.getItem('token');
@@ -49,19 +50,12 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     const loginRequest = this.form.value as LoginRequest;
 
-    this.authService.login(loginRequest).pipe(
-      take(1),
-      switchMap((response: AuthSuccess) => {
-        return this.authService.me().pipe(
-          take(1),
-          map((user: User) => ({ user, token: response.token }))
-        );
-      }),
-      finalize(() => this.isLoading = false)
-    )
+    this.authService.login(loginRequest).pipe(take(1), switchMap((response: AuthSuccess) => {
+      localStorage.setItem('token', response.token);
+      return this.authService.me().pipe(take(1), map((user: User) => ({user, token: response.token})));
+    }), finalize(() => this.isLoading = false))
       .subscribe({
-        next: ({ user, token }) => {
-          localStorage.setItem('user', JSON.stringify(user));
+        next: ({user, token}) => {
           this.sessionService.logIn(user, token);
           this.router.navigate(['mdd/articles']);
         },

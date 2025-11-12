@@ -15,11 +15,23 @@ export class RegisterComponent  {
   hide: boolean = false;
   onError: boolean = false;
 
+  /** ✅ Regex de complexité :
+   * - au moins 8 caractères
+   * - au moins une majuscule
+   * - au moins une minuscule
+   * - au moins un chiffre
+   * - au moins un caractère spécial
+   */
+  private passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     name: ['', [Validators.required, Validators.min(3)]],
-    password: ['', [Validators.required, Validators.min(3)]]
+    password: ['',[
+      Validators.required,
+      Validators.pattern(this.passwordPattern)
+    ]]
   });
 
   constructor(private authService: AuthService,
@@ -36,5 +48,13 @@ export class RegisterComponent  {
       },
       error => this.onError = true
     );
+  }
+  get passwordError(): string | null {
+    const control = this.form.get('password');
+    if (control?.hasError('required')) return 'Le mot de passe est requis.';
+    if (control?.hasError('pattern')) {
+      return 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.';
+    }
+    return null;
   }
 }
