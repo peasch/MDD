@@ -24,4 +24,15 @@ import {MatSelectModule} from "@angular/material/select";
     MatSelectModule
   ]
 })
+/**
+ * Module Angular regroupant et réexportant les modules Angular Material utilisés dans l'application.
+ *
+ * Ce module a pour objectif de :
+ * - centraliser les imports Angular Material
+ * - simplifier les imports dans les autres modules de l'application
+ * - garantir une organisation cohérente et maintenable
+ *
+ * Pour utiliser un composant Material, il suffit d'importer ce module
+ * dans le module où le composant sera utilisé.
+ */
 export class MaterialModule {}

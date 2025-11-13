@@ -20,9 +20,16 @@ import {MaterialModule} from "./shared/material.module";
 import {MddModule} from "./mdd/mdd.module";
 import { ProfileThemesComponent } from './pages/profile/profile-themes/profile-themes.component';
 
-
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NotFoundComponent, ProfileComponent, ProfileThemesComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    NotFoundComponent,
+    ProfileComponent,
+    ProfileThemesComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,5 +47,24 @@ import { ProfileThemesComponent } from './pages/profile/profile-themes/profile-t
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+/**
+ * Module racine de l'application Angular.
+ *
+ * Il centralise :
+ * - la déclaration des composants globaux (Home, Login, Register, Profile, etc.)
+ * - l'import des modules essentiels (Browser, Router, Animations, Forms)
+ * - l'import des modules architecturaux (CoreModule, SharedModule, MddModule)
+ * - la configuration des providers généraux comme les interceptors HTTP
+ *
+ * Ce module est chargé au démarrage de l'application et initialise le `AppComponent`
+ * comme composant principal (bootstrap).
+ *
+ * Structure globale :
+ * - **CoreModule** : Services singletons, interceptors, gestion du cœur de l'app.
+ * - **SharedModule** : Composants / modules réutilisables (Material, directives, pipes).
+ * - **MddModule** : Fonctionnalités métier (thèmes, articles, modèles MDD).
+ * - **MaterialModule** : Modules Angular Material centralisés.
+ *
+ * L’`AppModule` orchestre ainsi toute la configuration technique nécessaire au fonctionnement global.
+ */
+export class AppModule {}

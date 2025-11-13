@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByEmail(String email) {
         if (checkEmail(email)) {
-            return mapper.fromUserToDtoWithoutPassword(userDao.findByEmail(email));
+            return mapper.fromUserToDto(userDao.findByEmail(email));
         } else {
             return null;
         }
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByUsername(String username) {
         if (this.checkUsername(username)) {
-            return mapper.fromUserToDtoWithoutPassword(userDao.findByUsername(username));
+            return mapper.fromUserToDto(userDao.findByUsername(username));
         } else {
             return null;
         }
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(UserDTO userDto) {
         UserDTO userToUpdate = mapper.fromUserToDto(userDao.findById(userDto.getId()));
-        if (!userDto.getPassword().isEmpty()) {
+        if (userDto.getPassword()!=null) {
             userToUpdate.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         }
         userToUpdate.setEmail(userDto.getEmail());
