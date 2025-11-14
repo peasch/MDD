@@ -55,7 +55,7 @@ export class ArticleComponent implements OnInit, OnChanges {
    * @param changes Objet contenant les modifications détectées.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['article'] && this.article && this.article.author) {
+    if (changes['article'] && this.article && this.article.authorId) {
       this.loadAuthor();
     }
   }
@@ -66,7 +66,7 @@ export class ArticleComponent implements OnInit, OnChanges {
    * Récupère l’utilisateur à partir de son ID dans l’article.
    */
   private loadAuthor(): void {
-    this.userService.getUserById(this.article.author).subscribe({
+    this.userService.getUserById(this.article.authorId).subscribe({
       next: (response: any) => {
         this.author = response.user;
       },

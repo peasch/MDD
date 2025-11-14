@@ -59,7 +59,7 @@ export class NewArticleComponent implements OnInit {
       username: ''
     }),
     theme: this.fb.group({
-      id: '',
+      themeId: '',
       name: ''
     }),
     content: ['', [Validators.required, Validators.min(3)]]
@@ -112,10 +112,10 @@ export class NewArticleComponent implements OnInit {
    */
   public onSubmit(form: FormGroup): void {
     const articleToSave = {
-      author: this.currentUser,
+      authorId: this.currentUser.id,
       title: this.form.value.title,
       content: this.form.value.content,
-      theme: this.form.value.theme
+      themeId: this.form.value.theme?.themeId
     };
 
     console.log(articleToSave);

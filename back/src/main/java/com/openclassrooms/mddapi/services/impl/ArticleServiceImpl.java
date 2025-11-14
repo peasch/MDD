@@ -95,14 +95,13 @@ public class ArticleServiceImpl implements ArticleService {
      * @return l’article sauvegardé sous forme de {@link ArticleDTO}.
      */
     @Override
-    public ArticleDTO save(ArticleDTO article) {
-        UserDTO author = userService.getUserById(article.getAuthorId());
+    public ArticleDTO save(ArticleDTO article, int authorId) {
         ThemeDTO theme = themeService.getThemeById(article.getThemeId());
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setThemeId(theme.getId());
         articleDTO.setTitle(article.getTitle());
         articleDTO.setContent(article.getContent());
-        articleDTO.setAuthorId(author.getId());
+        articleDTO.setAuthorId(authorId);
         articleDTO.setCreatedAt(new Date());
 
         return mapper.fromArticleToDto(articleDAO.save(mapper.fromDtoToArticle(articleDTO)));

@@ -49,7 +49,7 @@ public interface ArticleService {
      * @param article les informations de l’article à enregistrer.
      * @return l’article sauvegardé sous forme de {@link ArticleDTO}.
      */
-    ArticleDTO save(ArticleDTO article);
+    ArticleDTO save(ArticleDTO article,int authorId);
 
     /**
      * Met à jour un article existant, si l’utilisateur est bien son auteur.

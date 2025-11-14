@@ -1,14 +1,14 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
 
-import { ThemeResolver } from "./Resolvers/themes.resolver";
-import { ThemeListComponent } from "./components/theme-list/theme-list.component";
-import { ArticleListComponent } from "./components/article-list/article-list.component";
-import { ArticleResolver } from "./Resolvers/article.resolver";
-import { AuthGuard } from "../core/guards/auth.guard";
-import { ArticleDetailsComponent } from "./components/article-details/article-details.component";
-import { NewArticleComponent } from "./components/new-article/new-article.component";
-import { HomeComponent } from "../pages/home/home.component";
+import {ThemeResolver} from "./Resolvers/themes.resolver";
+import {ThemeListComponent} from "./components/theme-list/theme-list.component";
+import {ArticleListComponent} from "./components/article-list/article-list.component";
+import {ArticleResolver} from "./Resolvers/article.resolver";
+import {AuthGuard} from "../core/guards/auth.guard";
+import {ArticleDetailsComponent} from "./components/article-details/article-details.component";
+import {NewArticleComponent} from "./components/new-article/new-article.component";
+import {HomeComponent} from "../pages/home/home.component";
 
 /**
  * Module de routage du domaine MDD (articles & thèmes).
@@ -27,7 +27,7 @@ import { HomeComponent } from "../pages/home/home.component";
  */
 const routes: Routes = [
   /** Redirection par défaut vers la liste des articles */
-  { path: '', redirectTo: 'articles', pathMatch: 'full' },
+  {path: '', redirectTo: 'articles', pathMatch: 'full'},
 
   /**
    * Liste des thèmes
@@ -37,7 +37,7 @@ const routes: Routes = [
   {
     path: "themes",
     component: ThemeListComponent,
-    resolve: { themes: ThemeResolver },
+    resolve: {themes: ThemeResolver},
     canActivate: [AuthGuard]
   },
 
@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: "articles",
     component: ArticleListComponent,
-    resolve: { articles: ArticleResolver },
+    resolve: {articles: ArticleResolver},
     canActivate: [AuthGuard]
   },
 
@@ -81,4 +81,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MddRoutingModule {}
+export class MddRoutingModule {
+}

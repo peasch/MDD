@@ -1,56 +1,68 @@
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
-  /* surtout PAS: grid-column: 1 / -1; */
-}
-
-.matcardAction {
-  display: flex;
-  justify-content: center;
-}
-
 .articleCard {
   background-color: rgb(245, 245, 245);
   cursor: pointer;
-  height: 200px; /* même hauteur pour toutes les cartes */
+  height: 200px;                 /* desktop */
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
   mat-card-header {
     flex-shrink: 0;
-    margin-bottom: 4px; /* 👈 réduit l’espace entre header et content */
+    margin-bottom: 4px;
   }
 
   mat-card-title {
-    margin-bottom: 0; /* supprime l’espace interne de Angular Material */
+    margin-bottom: 0;
   }
 
   mat-card-subtitle {
-    padding-top: 30px; /* 👈 au lieu de 20px */
-    margin-bottom: 0; /* évite un vide supplémentaire */
+    padding-top: 10px;
+    margin-bottom: 4px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-
-    span:last-child {
-      margin-left: 16px;
-    }
   }
 
-  mat-card-content {
-    margin: 30px 5px 30px 5px; /* 👈 réduit le haut */
+  mat-card-content.articleContent {
+    flex: 1;
+    padding: 10px 5px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    white-space: normal;
 
     span {
+      display: -webkit-box;
+      -webkit-line-clamp: 6;     /* desktop */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: fade;
+      white-space: normal;
+
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.35;
+    }
+  }
+}
+
+/* 🔥 VERSION MOBILE : largeur < 800px */
+@media (max-width: 800px) {
+  .articleCard {
+    height: 160px;               /* un peu plus compact */
+
+    mat-card-subtitle {
+      padding-top: 6px;
+      margin-bottom: 2px;
+      flex-direction: column;    /* stacké verticalement */
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    mat-card-content.articleContent {
+      padding: 6px 4px;
+
+      span {
+        -webkit-line-clamp: 4;   /* 👉 4 lignes visibles sur mobile */
+        font-size: 13px;         /* légèrement plus petit */
+        line-height: 1.3;
+      }
     }
   }
 }

@@ -20,7 +20,7 @@
                             appearance="fill"
                             style="width: 350px" formGroupName="theme">
               <mat-label><b>Sélectionnez le thème</b></mat-label>
-              <mat-select formControlName="id"  required>
+              <mat-select formControlName="themeId"  required>
                 <mat-option *ngFor="let theme of themes" [value]="theme.id"> {{ theme.name }} </mat-option>
               </mat-select>
             </mat-form-field>

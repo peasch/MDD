@@ -113,7 +113,7 @@ public class ArticleController {
         UserDTO userLoggedIn = userService.getUserByEmail(principal.getClaimAsString("sub"));
         Map<Object, Object> model = new HashMap<>();
         try {
-            ArticleDTO articleDTO = service.save(newArticleDTO);
+            ArticleDTO articleDTO = service.save(newArticleDTO,userLoggedIn.getId());
             model.put("article", articleDTO);
             return ok(model);
         } catch (Exception e) {

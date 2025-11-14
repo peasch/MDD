@@ -13,7 +13,7 @@ export class Article {
   title!: string;
 
   /** Identifiant du thème associé à l’article. */
-  theme!: number;
+  themeId!: number;
 
   /** Contenu principal de l’article. */
   content!: string;
@@ -25,7 +25,7 @@ export class Article {
   updatedAt!: string;
 
   /** Identifiant de l’auteur de l’article. */
-  author!: number;
+  authorId!: number;
 
   /** Nom d’utilisateur de l’auteur (utile pour l’affichage rapide). */
   authorUsername!: string;
