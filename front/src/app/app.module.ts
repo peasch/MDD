@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
@@ -19,6 +19,10 @@ import {ProfileComponent} from './pages/profile/profile.component';
 import {MaterialModule} from "./shared/material.module";
 import {MddModule} from "./mdd/mdd.module";
 import { ProfileThemesComponent } from './pages/profile/profile-themes/profile-themes.component';
+import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import { ProfileThemesComponent } from './pages/profile/profile-themes/profile-t
     MddModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    { provide: LOCALE_ID, useValue: 'fr-FR' }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,28 @@
+.not-found-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.not-found-image {
+  max-width: 100%;     // L’image ne dépasse jamais la largeur de l’écran
+  height: auto;        // Conserve les proportions
+  width: 400px;        // Taille par défaut sur grand écran
+}
+
+.not-found-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* 📱 Responsive : réduire l'image sur mobile */
+@media (max-width: 600px) {
+  .not-found-image {
+    width: 70%;       // Réduction auto sur smartphone
+  }
+
+}

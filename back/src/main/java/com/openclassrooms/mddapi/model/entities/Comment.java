@@ -46,7 +46,7 @@ public class Comment implements Serializable {
     private String content;
 
     /** Identifiant de l’utilisateur ayant publié le commentaire. */
-    @Column(name = "user_id")
+    @Column(name = "author_id")
     private int authorId;
 
     /** Identifiant de l’article sur lequel le commentaire a été posté. */
