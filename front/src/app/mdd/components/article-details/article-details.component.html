@@ -1,60 +1,80 @@
-<section class="article-header">
-  <div style="display:inline-flex;">
-    <button mat-icon-button routerLink="/mdd/articles" style="margin: 10px 0px 0px 10px">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div style="margin: 20px;font-weight: bold">
-      <span>{{ article.title | titlecase }}</span>
-    </div>
-  </div>
-</section>
+<!-- On n'affiche la page que lorsque l'article est chargé -->
+<ng-container *ngIf="article as a; else loadingArticle">
 
-<section class="article-section">
-  <div style="justify-content: space-between;display: flex;margin-right: 10%">
-    <span>Date : {{ article.createdAt | date:'longDate':'fr' }}</span>
-    <span style="margin-left: 50px">Auteur : {{ article.authorUsername| titlecase }}</span>
-    <span style="margin-left: 50px">Thème : {{ theme.name | titlecase }}</span>
-  </div>
-  <mat-divider style="margin: 20px"></mat-divider>
-  <div>
-    <span>{{ article.content }}</span>
-  </div>
-  <mat-divider style="margin: 20px"></mat-divider>
-</section>
-
-<section class="article-section">
-  <div style="margin: 20px;font-weight: bold">
-    <span>Commentaires</span>
-  </div>
-
-  <ng-container>
-    <app-comment
-      *ngFor="let comment of comments"
-      [comment]="comment">
-    </app-comment>
-
-    <!-- ✅ Formulaire d'ajout de commentaire -->
-    <form [formGroup]="form" style="display: flex; width: 100%;">
-      <div class="add-comment" style="flex: 1;">
-        <mat-form-field style="width: 100%;">
-          <textarea
-            matInput
-            placeholder="Ajouter un commentaire..."
-            appearance="outline"
-            class="comment-field"
-            formControlName="content"
-            rows="3">
-          </textarea>
-        </mat-form-field>
-      </div>
-
-      <button
-        mat-icon-button
-        class="send-btn"
-        color="primary"
-        (click)="addComment(article.id, form)">
-        <mat-icon>send</mat-icon>
+  <section class="article-header">
+    <div style="display:inline-flex;">
+      <button mat-icon-button routerLink="/mdd/articles" style="margin: 10px 0px 0px 10px">
+        <mat-icon>arrow_back</mat-icon>
       </button>
-    </form>
-  </ng-container>
-</section>
+      <div style="margin: 20px;font-weight: bold">
+        <span>{{ a.title | titlecase }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="article-section">
+    <div style="justify-content: space-between;display: flex;margin-right: 10%">
+      <span>Date : {{ a.createdAt | date:'longDate':'fr' }}</span>
+      <span style="margin-left: 50px">
+        Auteur : {{ a.authorUsername | titlecase }}
+      </span>
+      <span style="margin-left: 50px">
+        Thème : {{ theme?.name | titlecase }}
+      </span>
+    </div>
+
+    <mat-divider style="margin: 20px"></mat-divider>
+
+    <div>
+      <span>{{ a.content }}</span>
+    </div>
+
+    <mat-divider style="margin: 20px"></mat-divider>
+  </section>
+
+  <section class="article-section">
+    <div style="margin: 20px;font-weight: bold">
+      <span>Commentaires</span>
+    </div>
+
+    <ng-container>
+      <app-comment
+        *ngFor="let comment of comments"
+        [comment]="comment">
+      </app-comment>
+
+      <!-- Formulaire d'ajout de commentaire -->
+      <form [formGroup]="form" style="display: flex; width: 100%;">
+        <div class="add-comment" style="flex: 1;">
+          <mat-form-field style="width: 100%;">
+            <textarea
+              matInput
+              placeholder="Ajouter un commentaire..."
+              appearance="outline"
+              class="comment-field"
+              formControlName="content"
+              rows="3">
+            </textarea>
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-icon-button
+          class="send-btn"
+          color="primary"
+          type="button"
+          (click)="addComment(a.id, form)">
+          <mat-icon>send</mat-icon>
+        </button>
+      </form>
+    </ng-container>
+  </section>
+
+</ng-container>
+
+<!-- Template de chargement -->
+<ng-template #loadingArticle>
+  <section class="article-section">
+    <p>Chargement de l'article...</p>
+  </section>
+</ng-template>

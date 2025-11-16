@@ -1,21 +1,17 @@
-<section class="comment-section">
+<section class="comment-section" *ngIf="comment as c">
   <div class="comment" style="margin-bottom: 20px">
     <div class="comment-row">
-      <!-- Bloc username à gauche -->
       <div class="comment-user">
-        {{ author.username }}
+        {{ author?.username || 'Utilisateur inconnu' }}
       </div>
-
-      <!-- Bulle du commentaire à droite -->
       <div class="comment-bubble">
         <p class="comment-content">
-          {{ comment.content }}
+          {{ c.content }}
         </p>
         <span class="comment-date">
-          {{ comment.createdAt | date:"EE d MMMM yyyy 'à' HH:mm":'fr' }}
+          {{ c.createdAt | date:"EE d MMMM yyyy 'à' HH:mm":'fr' }}
         </span>
       </div>
     </div>
   </div>
 </section>
-
