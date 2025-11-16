@@ -7,6 +7,8 @@ import { CommentService } from "../../../shared/services/comment.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "../../models/user.model";
 import { UserService } from "../../../shared/services/user.service";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {Theme} from "../../models/theme.model";
 
 /**
  * Page d’affichage des détails d’un article.
@@ -29,6 +31,7 @@ export class ArticleDetailsComponent implements OnInit {
 
   /** Article à afficher (chargé dynamiquement). */
   article!: Article;
+  theme!:Theme;
 
   /** Ensemble des commentaires liés à l’article. */
   comments!: Comment[];
@@ -54,7 +57,7 @@ export class ArticleDetailsComponent implements OnInit {
   constructor(
     private articleService: ArticleService,
     private commentService: CommentService,
-    private userService: UserService,
+    private themeService: ThemeService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -73,6 +76,13 @@ export class ArticleDetailsComponent implements OnInit {
     this.articleService.getArticleById(id).subscribe({
       next: (response: any) => {
         this.article = response.article;
+        this.themeService.getThemeById(response.article.themeId).subscribe( {
+          next:(response: any) => {
+            console.log(response);
+            this.theme = response.theme;
+          }
+          }
+        )
       },
       error: (error) => {
         console.error('Error loading article:', error);

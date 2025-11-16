@@ -72,4 +72,8 @@ export class ThemeService {
   followTheme(themeId: number): Observable<any> {
     return this.httpClient.get(`${environment.apiUrl}/api/theme/follow/${themeId}`);
   }
+
+  getThemeById(themeId:number): Observable<Theme> {
+    return this.httpClient.get<Theme>(`${environment.apiUrl}/api/theme/${themeId}`);
+  }
 }

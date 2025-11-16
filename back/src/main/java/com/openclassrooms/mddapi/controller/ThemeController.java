@@ -75,6 +75,22 @@ public class ThemeController {
     }
 
     /**
+     * Récupère la liste de tous les thèmes disponibles dans la base de données.
+     *
+     * @return {@link ResponseEntity} contenant la clé {@code "themes"} et la liste correspondante.
+     *         Retourne le code HTTP 200 en cas de succès.
+     */
+    @Operation(summary = "get all themes", description = "Retrieve all available themes from the database")
+    @ApiResponse(responseCode = "200", description = "request ok")
+    @ApiResponse(responseCode = "500", description = "error")
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<Object, Object>> getThemeById(@PathVariable(name = "id") int themeId,
+                                                            @AuthenticationPrincipal Jwt principal) {
+        Map<Object, Object> model = new HashMap<>();
+        model.put("theme", themeService.getThemeById(themeId));
+        return ok(model);
+    }
+    /**
      * Permet à l’utilisateur authentifié de suivre un thème.
      *
      * @param themeId   identifiant du thème à suivre

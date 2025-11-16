@@ -13,6 +13,7 @@
   <div>
     <span>Date : {{ article.createdAt | date:'fullDate':'fr' }}</span>
     <span style="margin-left: 50px">Auteur : {{ article.authorUsername| titlecase }}</span>
+    <span style="margin-left: 50px">Thème : {{ theme?.name | titlecase }}</span>
   </div>
   <mat-divider style="margin: 20px"></mat-divider>
   <div>

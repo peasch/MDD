@@ -4,6 +4,8 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
 import { HttpClientModule } from "@angular/common/http";
+import { FooterComponent } from './footer/footer.component';
+import {MaterialModule} from "../shared/material.module";
 
 /**
  * Module principal (CoreModule) regroupant les composants et services
@@ -24,16 +26,20 @@ import { HttpClientModule } from "@angular/common/http";
  */
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FooterComponent,
+    MaterialModule
   ],
-  exports: [
-    HeaderComponent
-  ]
+    exports: [
+        HeaderComponent,
+        FooterComponent
+    ]
 })
 export class CoreModule { }

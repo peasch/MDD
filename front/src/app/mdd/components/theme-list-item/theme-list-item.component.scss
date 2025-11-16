@@ -12,6 +12,7 @@
 /* Card */
 .themeCard {
   /* même hauteur pour toutes les cards */
+  background-color: rgb(245, 245, 245);
   height: var(--card-height);
   display: flex;
   flex-direction: column;

@@ -156,9 +156,9 @@ export class ProfileComponent implements OnInit {
   // -------------------------------------------------------------------
   // UPDATE PROFIL + REFRESH SESSION (comme dans le login)
   // -------------------------------------------------------------------
-
   /**
    * Soumet le formulaire :
+   * - demande une confirmation à l'utilisateur
    * - met à jour les données utilisateur
    * - recharge l’utilisateur via `authService.me()`
    * - met à jour la session via `sessionService.logIn()`
@@ -168,6 +168,15 @@ export class ProfileComponent implements OnInit {
    */
   onSubmit(): void {
     if (this.form.invalid) return;
+
+    // 🔔 POPUP DE CONFIRMATION
+    const confirmed = window.confirm(
+      'Êtes-vous sûr de vouloir modifier vos coordonnées ? Vous allez être déconnectés.'
+
+    );
+    if (!confirmed) {
+      return; // l'utilisateur annule -> on ne fait rien
+    }
 
     const registerRequest = { ...this.form.value } as User;
     registerRequest.id = this.user.id;
@@ -189,13 +198,13 @@ export class ProfileComponent implements OnInit {
       )
       .subscribe({
         next: ({ user, token }) => {
-
           // 🔄 mise à jour immédiate dans le composant
           this.user = user;
 
-          // 🔄 rafraîchissement de la session locale
+          // 🔄 rafraîchissement de la session locale + déconnexion
           if (token) {
-            this.sessionService.logIn(user as any, token);
+            this.sessionService.logOut();
+            this.router.navigate(['mdd']);
           }
 
           // ✓ message de succès + reset UI
@@ -220,6 +229,7 @@ export class ProfileComponent implements OnInit {
         }
       });
   }
+
 
   // -------------------------------------------------------------------
   // Unfollow
