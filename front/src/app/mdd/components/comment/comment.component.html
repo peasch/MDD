@@ -1,12 +1,21 @@
 <section class="comment-section">
-  <div class="comment">
-    <div class="comment-header">
-      <span class="username">{{ author.username }}</span>
-      <span class="date">{{ comment.createdAt | date:"EEEE d MMMM yyyy 'à' HH:mm":'fr' }}</span>
-    </div>
+  <div class="comment" style="margin-bottom: 20px">
+    <div class="comment-row">
+      <!-- Bloc username à gauche -->
+      <div class="comment-user">
+        {{ author.username }}
+      </div>
 
-    <div class="comment-content">
-      {{ comment.content }}
+      <!-- Bulle du commentaire à droite -->
+      <div class="comment-bubble">
+        <p class="comment-content">
+          {{ comment.content }}
+        </p>
+        <span class="comment-date">
+          {{ comment.createdAt | date:"EE d MMMM yyyy 'à' HH:mm":'fr' }}
+        </span>
+      </div>
     </div>
   </div>
 </section>
+

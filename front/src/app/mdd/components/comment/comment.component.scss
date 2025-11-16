@@ -1,42 +1,68 @@
 .comment-section {
-
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 0.75rem;
 }
 
-.comment {
-  width: 80%;
-  margin:0 0 0 5%;
-  background-color: #f8f9fa;
-  border-radius: 0.75rem;
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.comment-header {
+/* Ligne username + bulle */
+.comment-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-  color: #555;
+  align-items: flex-start;
+
 }
 
-.username {
-  font-weight: 600;
-  color: #333;
+.comment-user {
+  min-width: 80px; // ou autre valeur selon ton design
+  text-align: left;
+  margin:0 10px;
 }
 
-.date {
-  font-style: italic;
-  color: #777;
+/* Bulle */
+.comment-bubble {
+  flex: 1;
+  background: #f3f3f3;
+  border-radius: 12px;
+  padding: 0.75rem 1rem 1.25rem;
+  position: relative;
+  word-wrap: break-word;
+  margin-right: 5%;
 }
 
 .comment-content {
-  margin:auto;
-  font-size: 1rem;
-  line-height: 1.4;
-  color: #222;
-  white-space: pre-wrap; /* permet de garder les retours à la ligne */
+  margin: 0 0 0.5rem 0;
+}
+
+/* Date desktop */
+.comment-date {
+  font-size: 0.75rem;
+  color: #888;
+  position: absolute;
+  bottom: 0.35rem;
+  right: 0.75rem;
+}
+
+/* ---------- RESPONSIVE < 600px ---------- */
+@media (max-width: 600px) {
+  .comment-row {
+    margin-top: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comment-user {
+    min-width: auto;
+    width: 100%;
+    text-align: right;  /* <<<<<< USERNAME à droite */
+      }
+
+  .comment-bubble {
+    width: 100%;
+  }
+
+  .comment-date {
+    position: static;
+    display: block;
+    text-align: right;
+    margin-top: 0.25rem;
+  }
 }

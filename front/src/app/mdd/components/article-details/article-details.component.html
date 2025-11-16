@@ -10,10 +10,10 @@
 </section>
 
 <section class="article-section">
-  <div>
-    <span>Date : {{ article.createdAt | date:'fullDate':'fr' }}</span>
+  <div style="justify-content: space-between;display: flex;margin-right: 10%">
+    <span>Date : {{ article.createdAt | date:'longDate':'fr' }}</span>
     <span style="margin-left: 50px">Auteur : {{ article.authorUsername| titlecase }}</span>
-    <span style="margin-left: 50px">Thème : {{ theme?.name | titlecase }}</span>
+    <span style="margin-left: 50px">Thème : {{ theme.name | titlecase }}</span>
   </div>
   <mat-divider style="margin: 20px"></mat-divider>
   <div>
