@@ -9,7 +9,7 @@ export interface RegisterRequest {
   email: string;
 
   /** Nom complet de l'utilisateur. */
-  name: string;
+  username: string;
 
   /** Mot de passe choisi par l'utilisateur. */
   password: string;

@@ -1,1 +1,72 @@
+/* Conteneur global */
+.home-hero {
+  width: 100%;
+  min-height: calc(100vh - 64px); /* Ajuste en fonction de ton header */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;           /* <--- Centre vertical sur DESKTOP */
+  padding: 64px 16px 40px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+}
 
+/* Image */
+.home-hero__image-wrapper {
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.home-hero__image {
+  width: 100%;
+  height: auto;
+}
+
+/* Titre */
+.home-hero__title {
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+/* Boutons */
+.home-hero__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-hero__buttons button {
+  padding-inline: 24px;
+}
+
+/* ---------- Responsive < 600px ---------- */
+@media (max-width: 600px) {
+  .home-hero {
+    justify-content: flex-start; /* <--- Ne centre plus verticalement */
+    padding-top: 80px;           /* Décale légèrement vers le haut */
+    padding-bottom: 40px;
+  }
+
+  .home-hero__image-wrapper {
+    margin-bottom: 16px;
+  }
+
+  .home-hero__title {
+    font-size: 1.6rem;
+  }
+
+  .home-hero__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .home-hero__buttons button {
+    width: 100%;
+  }
+}

@@ -4,7 +4,6 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
 import { HttpClientModule } from "@angular/common/http";
-import { FooterComponent } from './footer/footer.component';
 import {MaterialModule} from "../shared/material.module";
 
 /**
@@ -34,12 +33,10 @@ import {MaterialModule} from "../shared/material.module";
     SharedModule,
     RouterModule,
     HttpClientModule,
-    FooterComponent,
     MaterialModule
   ],
     exports: [
-        HeaderComponent,
-        FooterComponent
+        HeaderComponent
     ]
 })
 export class CoreModule { }

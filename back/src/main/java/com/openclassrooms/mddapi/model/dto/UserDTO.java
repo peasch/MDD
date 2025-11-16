@@ -62,7 +62,7 @@ public class UserDTO implements Serializable {
     private String username;
 
     /** Mot de passe de l’utilisateur. Peut être masqué lors de la sérialisation JSON. */
-    @JsonIgnore
+
     private String password;
 
     /** Liste des thèmes suivis par l’utilisateur. */

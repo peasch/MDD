@@ -1,7 +1,8 @@
 <mat-toolbar class="header-toolbar">
-  <a class="navbar-brand" routerLink="/mdd/articles">
+  <a class="navbar-brand" [routerLink]="($isLogged() | async) ? '/mdd/articles' : '/'" >
     <img [src]="cheminImage" alt="" width="70" height="48" class="d-inline-block">
   </a>
+
 
   <span class="spacer"></span>
 
