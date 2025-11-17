@@ -1,25 +1,35 @@
-# P6-Full-Stack-reseau-dev
+# Monde De Dev App!
 
-## Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+## Installation
 
-Don't forget to install your node_modules before starting (`npm install`).
+clone the project in your IDE.
 
-### Development server
+$ git clone https://github.com/peasch/MDD.git
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## DataBase :
 
-### Build
+$make sure to configure a database, create a model, an run the dump files.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+$ don't forget to set the DB credentials :
+ - in the run configuration
+ - environment variables
+ - DB_USERNAME / DB_PASSWORD
 
-### Where to start
+## build & run the back end
+$ cd /back/
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+$ mvn clean install 
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+$ run MddApiApplication
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
+## build and run the front end
 
-Good luck!
+$ cd /front/
+
+$ npm start
+
+$ navigate to http://localhost:4200/. 
+
+
+
