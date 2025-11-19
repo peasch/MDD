@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(UserDTO userDto) {
         UserDTO userToUpdate = mapper.fromUserToDto(userDao.findById(userDto.getId()));
-        if (userDto.getPassword()!=null) {
+        if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
             userToUpdate.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         }
         userToUpdate.setEmail(userDto.getEmail());

@@ -14,12 +14,12 @@
 
   <section class="article-section">
     <div style="justify-content: space-between;display: flex;margin-right: 10%">
-      <span>Date : {{ a.createdAt | date:'longDate':'fr' }}</span>
+      <span><span style="font-weight: bold">Date :</span> {{ a.createdAt | date:'longDate':'fr' }}</span>
       <span style="margin-left: 50px">
-        Auteur : {{ a.authorUsername | titlecase }}
+        <span style="font-weight: bold">Auteur :</span> {{ a.authorUsername | titlecase }}
       </span>
       <span style="margin-left: 50px">
-        Thème : {{ theme?.name | titlecase }}
+        <span style="font-weight: bold">Thème : </span> {{ theme?.name | titlecase }}
       </span>
     </div>
 
