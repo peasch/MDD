@@ -35,8 +35,8 @@
             </button>
           </mat-form-field>
         </div>
-        <div *ngIf="errorMessage"  style="text-align: center; margin-top: 10px;margin-bottom: 50px">
-          <p class="error-message">
+        <div style="text-align: center; min-height: 40px; margin-top: 10px;">
+          <p class="error-message" *ngIf="errorMessage">
             {{ errorMessage }}
           </p>
         </div>

@@ -16,6 +16,7 @@
       <!-- onSubmit UNIQUEMENT ici -->
       <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-card-content style="justify-content: center">
+
           <div style="text-align: center">
             <mat-form-field style="justify-content: center">
               <input
@@ -53,21 +54,28 @@
                 [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide"
               >
-                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                <mat-icon>
+                  {{ hide ? 'visibility_off' : 'visibility' }}
+                </mat-icon>
               </button>
-              <mat-error *ngIf="passwordError">{{ passwordError }}</mat-error>
             </mat-form-field>
           </div>
 
+          <!-- 🧱 Espace réservé pour le message d’erreur -->
+          <div style="text-align: center; min-height: 40px; margin-top: 5px; margin-bottom: 10px;">
+            <mat-error  *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)" class="error-message">
+              {{ passwordError }}
+            </mat-error>
+          </div>
+
           <div style="text-align: center">
-            <!-- plus de (click) ici, type submit -->
             <button mat-raised-button color="primary" type="submit">
               S'inscrire
             </button>
           </div>
         </mat-card-content>
 
-        <p *ngIf="onError" class="error">An error occurred</p>
+        <mat-error *ngIf="onError" class="error">An error occurred</mat-error>
       </form>
     </mat-card>
   </ng-container>
